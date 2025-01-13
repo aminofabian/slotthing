@@ -15,9 +15,17 @@ const ContactForm = () => {
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const particleCount = 20;
+    const initialParticles = Array.from({ length: particleCount }).map(() => ({
+      x: Math.random() * (window.innerWidth || 0),
+      y: Math.random() * (window.innerHeight || 0)
+    }));
+    setParticles(initialParticles);
+
     setDimensions({
       width: window.innerWidth,
       height: window.innerHeight
@@ -72,7 +80,6 @@ const ContactForm = () => {
   };
 
   const particleCount = 20;
-  const particles = Array.from({ length: particleCount });
 
   return (
     <section className="relative min-h-screen py-32 overflow-hidden bg-[#0E0E0E]">
@@ -82,13 +89,13 @@ const ContactForm = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
         
         {/* Animated Particles */}
-        {particles.map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-[#FFB000]"
             initial={{ 
-              x: Math.random() * (dimensions.width || 0),
-              y: Math.random() * (dimensions.height || 0),
+              x: particle.x,
+              y: particle.y,
               scale: 0,
               opacity: 0 
             }}
