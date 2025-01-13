@@ -283,13 +283,13 @@ export const Hero = () => {
                 : 'bg-gradient-to-b from-black/60 via-black/40 to-black/60'
             }`}>
               {/* Game-specific Content */}
-              <div className="relative h-full flex flex-col items-center justify-end pb-32 px-4 backdrop-blur-[2px]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center pt-[60vh] px-4">
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   key={`badge-${index}-${slide.title}`}
                   transition={{ delay: 0.1 }}
-                  className="mb-4 md:mb-6"
+                  className="mb-8"
                 >
                   <span className="px-4 md:px-6 py-2 rounded-full text-sm md:text-base font-bold bg-black/70 backdrop-blur-xl border border-[#FFB000]/30 text-[#FFCF9D] shadow-lg shadow-black/20 whitespace-nowrap">
                     {slide.badge === "HOT GAME" ? "TRENDING NOW" :
@@ -303,21 +303,19 @@ export const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   key={`title-${index}-${slide.title}`}
                   transition={{ delay: 0.2 }}
-                  className="text-3xl md:text-5xl font-black text-center mb-3 md:mb-4 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent tracking-tight drop-shadow-xl px-4 whitespace-nowrap"
+                  className="text-4xl md:text-5xl font-black text-white text-center mb-6"
                 >
                   {slide.title}
                 </motion.h3>
-                
+
                 <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   key={`desc-${index}-${slide.title}`}
                   transition={{ delay: 0.3 }}
-                  className="text-base md:text-xl text-center mb-6 md:mb-8 max-w-xl text-[#FFCF9D]/90 font-medium px-4 leading-tight md:leading-relaxed"
+                  className="text-lg md:text-xl text-[#FFCF9D]/90 text-center mb-8"
                 >
-                  {index === 0 ? "Experience the thrill of next-gen slots with our signature game. Epic multipliers await!" :
-                   index === 1 ? "Unleash the power of dragons in this epic adventure. Massive wins up to 10,000x!" :
-                   "Chase the rainbow of precious gems in this cascading masterpiece of wins."}
+                  {slide.description}
                 </motion.p>
 
                 <motion.div
@@ -325,10 +323,15 @@ export const Hero = () => {
                   animate={{ opacity: 1, y: 0 }}
                   key={`stats-${index}-${slide.title}`}
                   transition={{ delay: 0.4 }}
-                  className="grid grid-cols-3 gap-4 md:gap-6 max-w-4xl mx-auto w-full px-4"
+                  className="grid grid-cols-3 gap-4 w-full max-w-3xl"
                 >
                   {slide.stats.map((stat, statIndex) => (
-                    <StatCard key={`${index}-${statIndex}-${stat.label}`} {...stat} />
+                    <StatCard
+                      key={statIndex}
+                      icon={stat.icon}
+                      value={stat.value}
+                      label={stat.label}
+                    />
                   ))}
                 </motion.div>
               </div>
