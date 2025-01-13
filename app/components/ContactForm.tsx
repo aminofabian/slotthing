@@ -1,142 +1,289 @@
 'use client';
-import React, { useState } from 'react';
-import { Send, Mail, User, MessageSquare } from 'lucide-react';
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, MessageSquare, User, Mail, Sparkles, Star, Zap } from 'lucide-react';
 
-export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>({
+const ContactForm = () => {
+  const [formState, setFormState] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    submitted: false,
+    focused: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (formRef.current) {
+        const rect = formRef.current.getBoundingClientRect();
+        setMousePosition({
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top
+        });
+      }
+    };
+
+    const form = formRef.current;
+    if (form) {
+      form.addEventListener('mousemove', handleMouseMove);
+      return () => form.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, []);
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
+    setFormState(prev => ({ ...prev, submitted: true }));
+    // Add your form submission logic here
+  };
 
-    try {
-      // TODO: Implement your form submission logic here
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
+  const inputVariants = {
+    focused: {
+      scale: 1.02,
+      y: -5,
+      transition: { type: 'spring', stiffness: 300, damping: 20 }
+    },
+    unfocused: {
+      scale: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 20 }
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const particleCount = 20;
+  const particles = Array.from({ length: particleCount });
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Name Input */}
-      <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2">
-          <User className="w-5 h-5 text-yellow-400" />
-        </div>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          placeholder="Your Name"
-          className="w-full pl-12 pr-4 py-3 bg-purple-900/30 border border-yellow-400/10 rounded-xl 
-                   focus:border-yellow-400/50 focus:outline-none focus:ring-2 focus:ring-yellow-400/10
-                   placeholder:text-gray-500 text-white backdrop-blur-sm transition-all duration-300"
-        />
+    <section className="relative min-h-screen py-32 overflow-hidden bg-[#0E0E0E]">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
+        
+        {/* Animated Particles */}
+        {particles.map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#FFB000]"
+            initial={{ 
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+              scale: 0,
+              opacity: 0 
+            }}
+            animate={{ 
+              y: [null, Math.random() * -500],
+              scale: [0, 1, 0],
+              opacity: [0, 0.8, 0]
+            }}
+            transition={{ 
+              duration: Math.random() * 5 + 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        ))}
       </div>
 
-      {/* Email Input */}
-      <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2">
-          <Mail className="w-5 h-5 text-yellow-400" />
-        </div>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          placeholder="Your Email"
-          className="w-full pl-12 pr-4 py-3 bg-purple-900/30 border border-yellow-400/10 rounded-xl 
-                   focus:border-yellow-400/50 focus:outline-none focus:ring-2 focus:ring-yellow-400/10
-                   placeholder:text-gray-500 text-white backdrop-blur-sm transition-all duration-300"
-        />
-      </div>
-
-      {/* Message Input */}
-      <div className="relative">
-        <div className="absolute left-3 top-4">
-          <MessageSquare className="w-5 h-5 text-yellow-400" />
-        </div>
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-          placeholder="Your Message"
-          rows={4}
-          className="w-full pl-12 pr-4 py-3 bg-purple-900/30 border border-yellow-400/10 rounded-xl 
-                   focus:border-yellow-400/50 focus:outline-none focus:ring-2 focus:ring-yellow-400/10
-                   placeholder:text-gray-500 text-white backdrop-blur-sm transition-all duration-300"
-        />
-      </div>
-
-      {/* Submit Button */}
-      <div className="relative">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full px-8 py-4 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 
-                   text-black font-semibold rounded-xl hover:brightness-110 transition-all duration-300 
-                   shadow-lg hover:shadow-yellow-500/25 disabled:opacity-50 disabled:cursor-not-allowed
-                   group relative overflow-hidden"
+      <div className="container mx-auto px-4 relative">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-orange-500/20 to-red-500/20 
-                        rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <span className="relative flex items-center justify-center gap-2">
-            {isSubmitting ? (
-              <>
-                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                Sending...
-              </>
-            ) : (
-              <>
-                <Send className="w-5 h-5" />
-                Send Message
-              </>
-            )}
-          </span>
-        </button>
-      </div>
+          <h2 className="text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-4">
+            Get in Touch
+          </h2>
+          <p className="text-[#FFCF9D]/70 text-lg max-w-2xl mx-auto">
+            Have a question or need assistance? Our team is here to help you 24/7.
+          </p>
+        </motion.div>
 
-      {/* Status Messages */}
-      {submitStatus === 'success' && (
-        <div className="text-green-400 text-center animate-fadeIn">
-          Message sent successfully! We'll get back to you soon.
+        <div className="max-w-4xl mx-auto">
+          <motion.div
+            ref={formRef}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="relative bg-[#1A1A1A]/50 backdrop-blur-xl rounded-3xl p-8 border border-[#FFB000]/20"
+            style={{
+              perspective: '1000px',
+              transformStyle: 'preserve-3d'
+            }}
+          >
+            {/* Interactive Spotlight Effect */}
+            <div 
+              className="absolute inset-0 rounded-3xl opacity-20 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 176, 0, 0.15), transparent 25%)`
+              }}
+            />
+
+            {/* Floating Icons */}
+            <div className="absolute -top-6 -right-6 w-12 h-12">
+              <motion.div
+                animate={{
+                  rotate: [0, 360],
+                  y: [0, -10, 0]
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                className="w-full h-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
+              >
+                <MessageSquare className="w-6 h-6 text-black" />
+              </motion.div>
+            </div>
+
+            {formState.submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="py-20 text-center"
+              >
+                <motion.div
+                  animate={{
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
+                >
+                  <Sparkles className="w-10 h-10 text-black" />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-[#FFCF9D] mb-4">Message Sent Successfully!</h3>
+                <p className="text-[#FFCF9D]/70">We'll get back to you as soon as possible.</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Input */}
+                <motion.div
+                  variants={inputVariants}
+                  animate={formState.focused === 'name' ? 'focused' : 'unfocused'}
+                  className="relative"
+                >
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#FFB000]">
+                    <User className="w-5 h-5" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Your Name"
+                    required
+                    className="w-full h-14 bg-[#1A1A1A] rounded-xl pl-12 pr-4 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none"
+                    onFocus={() => setFormState(prev => ({ ...prev, focused: 'name' }))}
+                    onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
+                    onChange={e => setFormState(prev => ({ ...prev, name: e.target.value }))}
+                  />
+                  <motion.div
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    animate={{
+                      scale: formState.focused === 'name' ? 1.05 : 1
+                    }}
+                  />
+                </motion.div>
+
+                {/* Email Input */}
+                <motion.div
+                  variants={inputVariants}
+                  animate={formState.focused === 'email' ? 'focused' : 'unfocused'}
+                  className="relative"
+                >
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#FFB000]">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    required
+                    className="w-full h-14 bg-[#1A1A1A] rounded-xl pl-12 pr-4 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none"
+                    onFocus={() => setFormState(prev => ({ ...prev, focused: 'email' }))}
+                    onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
+                    onChange={e => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                  />
+                  <motion.div
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    animate={{
+                      scale: formState.focused === 'email' ? 1.05 : 1
+                    }}
+                  />
+                </motion.div>
+
+                {/* Message Input */}
+                <motion.div
+                  variants={inputVariants}
+                  animate={formState.focused === 'message' ? 'focused' : 'unfocused'}
+                  className="relative"
+                >
+                  <div className="absolute left-4 top-4 text-[#FFB000]">
+                    <MessageSquare className="w-5 h-5" />
+                  </div>
+                  <textarea
+                    placeholder="Your Message"
+                    required
+                    rows={5}
+                    className="w-full bg-[#1A1A1A] rounded-xl pl-12 pr-4 py-3 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none resize-none"
+                    onFocus={() => setFormState(prev => ({ ...prev, focused: 'message' }))}
+                    onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
+                    onChange={e => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                  />
+                  <motion.div
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    animate={{
+                      scale: formState.focused === 'message' ? 1.05 : 1
+                    }}
+                  />
+                </motion.div>
+
+                {/* Submit Button */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full h-14 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-xl text-black font-bold flex items-center justify-center gap-2 relative overflow-hidden group"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Send className="w-5 h-5" />
+                    Send Message
+                  </span>
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-[#FFCF9D] to-[#FFB000]"
+                    initial={{ x: '100%' }}
+                    whileHover={{ x: 0 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
+
+                {/* Decorative Elements */}
+                <div className="absolute -bottom-6 -left-6 w-12 h-12">
+                  <motion.div
+                    animate={{
+                      rotate: [0, -360],
+                      y: [0, 10, 0]
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                    className="w-full h-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
+                  >
+                    <Star className="w-6 h-6 text-black" />
+                  </motion.div>
+                </div>
+              </form>
+            )}
+          </motion.div>
         </div>
-      )}
-      {submitStatus === 'error' && (
-        <div className="text-red-400 text-center animate-fadeIn">
-          Oops! Something went wrong. Please try again.
-        </div>
-      )}
-    </form>
+      </div>
+    </section>
   );
-}
+};
+
+export default ContactForm;

@@ -1,37 +1,40 @@
-import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
-import "./globals.css";
-import { ClientThemeLayout } from "./components/ClientThemeLayout";
-import { ThemeProvider } from "./context/ThemeContext";
+import type { Metadata } from 'next'
+import { Playfair_Display } from 'next/font/google'
+import './globals.css'
+import { ThemeProvider } from './context/ThemeContext'
+import NavBar from './components/NavBar'
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: 'swap',
-});
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+})
 
 export const metadata: Metadata = {
-  title: "Lucky Slots | Modern Slot Game Experience",
-  description: "Experience the thrill of modern slot gaming with stunning visuals and exciting rewards",
-  authors: [{ name: "Your Name" }],
-  keywords: ["slots", "gaming", "casino", "jackpot"],
-  themeColor: "#581c87", // purple-900
-};
+  title: 'Slot Thing - Next-Gen Slot Gaming',
+  description: 'Experience the thrill of next-gen slot gaming with Slot Thing',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" className={outfit.variable}>
-      <body className="font-outfit antialiased selection:bg-yellow-400 selection:text-purple-950">
+    <html lang="en">
+      <body className={`${playfair.variable} font-serif antialiased`}>
         <ThemeProvider>
-          <ClientThemeLayout>
-            {children}
-          </ClientThemeLayout>
+          <div className="relative min-h-screen overflow-hidden">
+            {/* Background noise texture */}
+            <div className="fixed inset-0 bg-[url('/noise.png')] opacity-[0.02] pointer-events-none"></div>
+            
+            {/* Content */}
+            <div className="relative">
+              <NavBar />
+              <main>{children}</main>
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

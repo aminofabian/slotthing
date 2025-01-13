@@ -1,167 +1,327 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Trophy, Coins, Diamond, Crown, Flame, Sparkles, Zap, Timer } from 'lucide-react';
 
 interface Game {
   title: string;
   description: string;
   imageUrl: string;
   provider: string;
+  stats: {
+    icon: React.ReactNode;
+    value: string;
+    label: string;
+  }[];
+  features: string[];
+  popularity: number;
+  category: 'slots' | 'table' | 'live' | 'crypto';
 }
 
 const games: Game[] = [
   {
     title: "Panda Master",
     description: "Experience the mystical world of pandas in this enchanting game",
-    imageUrl: "/games/panda-master.jpg",
-    provider: "Premium"
+    imageUrl: "/1.jpg",
+    provider: "Premium",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "96.5%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$50K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "High", label: "Volatility" },
+    ],
+    features: ["Multiplier Wilds", "Free Spins", "Bonus Game"],
+    popularity: 98,
+    category: 'slots'
   },
   {
-    title: "VBlink",
-    description: "Fast-paced action with stunning visual effects",
-    imageUrl: "/games/vblink.jpg",
-    provider: "Featured"
+    title: "Dragon's Fortune",
+    description: "Unleash the power of ancient dragons in this epic slot adventure",
+    imageUrl: "/2.jpg",
+    provider: "Featured",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "97.2%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$100K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "Medium", label: "Volatility" },
+    ],
+    features: ["Dragon Respins", "Progressive Jackpot", "Mystery Symbols"],
+    popularity: 95,
+    category: 'slots'
   },
   {
-    title: "Orion Stars",
-    description: "Journey through the cosmos for stellar wins",
-    imageUrl: "/games/orion-stars.jpg",
-    provider: "Popular"
+    title: "Cosmic Spins",
+    description: "Journey through the cosmos for out-of-this-world wins",
+    imageUrl: "/3.jpg",
+    provider: "Popular",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "96.8%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$75K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "High", label: "Volatility" },
+    ],
+    features: ["Expanding Reels", "Cosmic Wilds", "Supernova Bonus"],
+    popularity: 92,
+    category: 'slots'
   },
   {
-    title: "Golden Treasure",
-    description: "Discover ancient riches and golden opportunities",
-    imageUrl: "/games/golden-treasure.jpg",
-    provider: "New"
+    title: "Golden Pharaoh",
+    description: "Uncover ancient Egyptian treasures in this golden adventure",
+    imageUrl: "/4.png",
+    provider: "New",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "96.5%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$50K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "High", label: "Volatility" },
+    ],
+    features: ["Pyramid Bonus", "Scarab Wilds", "Tomb Explorer"],
+    popularity: 88,
+    category: 'slots'
   },
   {
-    title: "Egames",
-    description: "Collection of exciting electronic gaming experiences",
-    imageUrl: "/games/egames.jpg",
-    provider: "Featured"
+    title: "Lucky Fortune",
+    description: "Where luck meets fortune in this Asian-inspired masterpiece",
+    imageUrl: "/5.jpg",
+    provider: "Featured",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "97.2%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$100K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "Medium", label: "Volatility" },
+    ],
+    features: ["Fortune Wheel", "Lucky Coins", "Dragon Dance"],
+    popularity: 94,
+    category: 'slots'
   },
   {
-    title: "Milk Way",
-    description: "Explore the galaxy of endless possibilities",
-    imageUrl: "/games/milk-way.jpg",
-    provider: "Premium"
-  },
-  {
-    title: "Juwa",
-    description: "Traditional games with a modern twist",
-    imageUrl: "/games/juwa.jpg",
-    provider: "Popular"
+    title: "Crypto Miners",
+    description: "Mine your way to crypto riches in this blockchain-themed slot",
+    imageUrl: "/images/faq/2.jpg",
+    provider: "Premium",
+    stats: [
+      { icon: <Coins className="w-5 h-5 text-[#FFCF9D]" />, value: "96.8%", label: "RTP" },
+      { icon: <Diamond className="w-5 h-5 text-[#FFCF9D]" />, value: "$75K", label: "Max Win" },
+      { icon: <Crown className="w-5 h-5 text-[#FFCF9D]" />, value: "High", label: "Volatility" },
+    ],
+    features: ["Bitcoin Bonus", "Blockchain Wilds", "Mining Multipliers"],
+    popularity: 96,
+    category: 'crypto'
   }
 ];
 
-const GameCard = ({ game, index }: { game: Game; index: number }) => (
-  <div className={`group relative ${index % 2 === 0 ? 'translate-y-8' : ''}`}>
-    <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-purple-950/50 to-purple-900/30 backdrop-blur-sm border border-yellow-400/10 p-6 transition-all duration-500 hover:scale-[1.02] hover:border-yellow-400/30 hover:translate-y-[-0.5rem]">
-      {/* Decorative corner shapes */}
-      <div className="absolute top-0 right-0 w-24 h-24 transform translate-x-12 -translate-y-12">
-        <div className="absolute inset-0 rotate-45 bg-gradient-to-r from-yellow-400/20 to-transparent blur-2xl" />
-      </div>
-      <div className="absolute bottom-0 left-0 w-32 h-32 transform -translate-x-16 translate-y-16">
-        <div className="absolute inset-0 rotate-45 bg-gradient-to-r from-purple-600/30 to-transparent blur-2xl" />
-      </div>
-
-      {/* Game Image Container */}
-      <div className="aspect-[16/9] relative overflow-hidden rounded-2xl transform transition-transform duration-700 group-hover:scale-[1.02]">
-        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-purple-900/50 to-transparent z-10" />
-        <Image
-          src={game.imageUrl}
-          alt={game.title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        {/* Animated overlay shapes */}
-        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-yellow-400/10 rounded-full blur-xl transform -translate-x-16 -translate-y-16 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-1000" />
-            <div className="absolute bottom-0 right-0 w-48 h-48 bg-purple-600/20 rounded-full blur-xl transform translate-x-24 translate-y-24 group-hover:translate-x-8 group-hover:translate-y-8 transition-transform duration-1000" />
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="mt-6 relative z-10">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center space-x-2">
-            <span className="relative inline-block">
-              <span className="absolute inset-0 animate-ping rounded-full bg-yellow-400/20"></span>
-              <span className="relative inline-block px-4 py-1.5 text-xs font-bold text-yellow-400 bg-yellow-400/10 rounded-full border border-yellow-400/20">
-                {game.provider}
-              </span>
-            </span>
-          </div>
-          <div className="relative group">
-            <div className="absolute inset-0 rounded-full bg-yellow-400/20 blur group-hover:bg-yellow-400/30 transition-colors duration-300"></div>
-            <div className="relative h-8 w-8 rounded-full bg-purple-900/50 border border-yellow-400/20 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-              <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <h3 className="text-2xl font-bold text-white group-hover:text-yellow-400 transition-colors duration-300">{game.title}</h3>
-        <p className="mt-2 text-sm text-gray-400 line-clamp-2">{game.description}</p>
-        <button className="relative mt-6 w-full overflow-hidden rounded-xl bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 py-3 text-sm font-bold text-purple-950 transition-all duration-300 hover:from-yellow-500 hover:to-yellow-600 hover:shadow-lg hover:shadow-yellow-400/20 transform hover:-translate-y-0.5">
-          <span className="relative z-10">Play Now</span>
-          <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-yellow-400/0 via-yellow-400/30 to-yellow-400/0 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-        </button>
-      </div>
-    </div>
-  </div>
-);
-
-export default function GamesSection() {
+const GameCard = ({ game, index }: { game: Game; index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
   return (
-    <section className="py-32 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-950/50 via-purple-900/30 to-purple-950/50" />
-      
-      {/* Animated background shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-yellow-400/5 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative group perspective-1000"
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+    >
+      {/* Floating Elements */}
+      <AnimatePresence>
+        {isHovered && (
+          <>
+            <motion.div
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              className="absolute -top-4 -right-4 bg-[#FFB000] text-black text-sm font-bold px-3 py-1 rounded-full z-20 flex items-center gap-2"
+            >
+              <Flame className="w-4 h-4" />
+              {game.popularity}% Hot
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="absolute -left-2 top-1/2 -translate-y-1/2 bg-[#FFB000]/20 backdrop-blur-sm text-[#FFCF9D] p-2 rounded-lg z-20"
+            >
+              <div className="flex flex-col gap-2">
+                {game.features.map((feature, i) => (
+                  <motion.div
+                    key={feature}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-center gap-1"
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    <span className="text-xs">{feature}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Main Card */}
+      <motion.div
+        whileHover={{
+          rotateY: 10,
+          rotateX: 5,
+          scale: 1.05,
+          z: 50
+        }}
+        className="relative bg-[#1A1A1A] rounded-2xl overflow-hidden transform-gpu preserve-3d shadow-2xl border border-[#FFB000]/20 group-hover:border-[#FFB000]/40"
+      >
+        {/* Game Image */}
+        <div className="relative h-48">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-transparent to-transparent z-10" />
+          <Image
+            src={game.imageUrl}
+            alt={game.title}
+            fill
+            className="object-cover transform group-hover:scale-110 transition-transform duration-700"
+          />
+          {/* Provider Badge */}
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            className="absolute top-4 left-4 z-20 px-3 py-1 rounded-full bg-[#FFB000] text-black text-sm font-bold"
+          >
+            {game.provider}
+          </motion.div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6">
+          <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent">
+            {game.title}
+          </h3>
+          <p className="text-[#FFCF9D]/70 mb-4 line-clamp-2">{game.description}</p>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            {game.stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ scale: 1.1 }}
+                className="text-center"
+              >
+                <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-gradient-to-r from-[#FFB000]/20 to-[#FFCF9D]/20 flex items-center justify-center">
+                  {stat.icon}
+                </div>
+                <div className="text-sm font-bold text-[#FFCF9D]">{stat.value}</div>
+                <div className="text-xs text-[#FFCF9D]/50">{stat.label}</div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Play Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-bold relative overflow-hidden group"
+          >
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <Zap className="w-5 h-5" />
+              Play Now
+            </span>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-[#FFCF9D] to-[#FFB000]"
+              initial={{ x: '100%' }}
+              whileHover={{ x: 0 }}
+              transition={{ duration: 0.3 }}
+            />
+          </motion.button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+const GamesSection = () => {
+  const [selectedCategory, setSelectedCategory] = useState<Game['category'] | 'all'>('all');
+
+  const categories = [
+    { id: 'all', label: 'All Games', icon: <Sparkles className="w-5 h-5" /> },
+    { id: 'slots', label: 'Slots', icon: <Diamond className="w-5 h-5" /> },
+    { id: 'table', label: 'Table Games', icon: <Crown className="w-5 h-5" /> },
+    { id: 'live', label: 'Live Casino', icon: <Zap className="w-5 h-5" /> },
+    { id: 'crypto', label: 'Crypto Games', icon: <Coins className="w-5 h-5" /> },
+  ];
+
+  const filteredGames = games.filter(game => 
+    selectedCategory === 'all' ? true : game.category === selectedCategory
+  );
+
+  return (
+    <section className="relative py-32 overflow-hidden bg-[#0E0E0E]">
+      {/* Background Effects */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
+        
+        {/* Animated Particles */}
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#FFB000]"
+            initial={{ 
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+              scale: 0,
+              opacity: 0 
+            }}
+            animate={{ 
+              y: [null, Math.random() * -500],
+              scale: [0, 1, 0],
+              opacity: [0, 0.8, 0]
+            }}
+            transition={{ 
+              duration: Math.random() * 5 + 5,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        ))}
       </div>
 
-      {/* Hexagon Grid Pattern */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill-opacity='0.1' fill='%23FCD34D' fill-rule='evenodd'/%3E%3C/svg%3E")`,
-          backgroundSize: '60px 60px'
-        }}></div>
-      </div>
-      
-      {/* Top and Bottom Borders with animated gradient */}
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent animate-gradient-x"></div>
-      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-yellow-400/50 to-transparent animate-gradient-x"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-20">
-          <div className="inline-block">
-            <h2 className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 mb-6 relative">
-              Featured Games
-              <div className="absolute -top-8 -right-8 w-16 h-16">
-                <div className="absolute inset-0 rotate-45 bg-yellow-400/20 rounded-lg blur-lg animate-pulse"></div>
-              </div>
-              <div className="absolute -bottom-8 -left-8 w-16 h-16">
-                <div className="absolute inset-0 rotate-45 bg-purple-600/30 rounded-lg blur-lg animate-pulse animation-delay-500"></div>
-              </div>
-            </h2>
+      <div className="relative container mx-auto px-4">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-8">
+            Featured Games
+          </h2>
+
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {categories.map((category) => (
+              <motion.button
+                key={category.id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(category.id as Game['category'] | 'all')}
+                className={`px-6 py-3 rounded-xl flex items-center gap-2 transition-all ${
+                  selectedCategory === category.id
+                    ? 'bg-[#FFB000] text-black font-bold'
+                    : 'bg-[#FFB000]/20 text-[#FFCF9D] hover:bg-[#FFB000]/30'
+                }`}
+              >
+                {category.icon}
+                {category.label}
+              </motion.button>
+            ))}
           </div>
-          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-            Discover our collection of premium games with incredible rewards and endless entertainment
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {games.map((game, index) => (
-            <GameCard key={index} game={game} index={index} />
-          ))}
+        </motion.div>
+
+        {/* Games Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <AnimatePresence mode="wait">
+            {filteredGames.map((game, index) => (
+              <GameCard key={game.title} game={game} index={index} />
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default GamesSection;

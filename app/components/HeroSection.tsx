@@ -30,13 +30,13 @@ const WinnerCard = ({ username, game, amount, timeAgo, multiplier }: WinnerCardP
       <div className="absolute inset-0 rounded-xl transition-transform duration-300 group-hover:scale-105">
         <div className={`absolute inset-0 rounded-xl transition-colors duration-300 ${
           theme === 'dark'
-            ? 'bg-yellow-400/30 border border-yellow-400/10'
-            : 'bg-white shadow-lg border border-gray-100'
+            ? 'bg-secondary-800/50 border border-secondary-700'
+            : 'bg-white shadow-lg border border-secondary-200'
         }`}></div>
         <div className={`absolute bottom-0 left-0 w-full h-1/2 rounded-b-xl ${
           theme === 'dark'
-            ? 'bg-gradient-to-t from-fuchsia-200/30 to-transparent opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-30'
-            : 'bg-gradient-to-t from-orange-100/30 to-transparent opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-40'
+            ? 'bg-gradient-to-t from-secondary-900/20 to-transparent opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-30'
+            : 'bg-gradient-to-t from-secondary-100/20 to-transparent opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-40'
         }`}></div>
       </div>
       
@@ -46,28 +46,28 @@ const WinnerCard = ({ username, game, amount, timeAgo, multiplier }: WinnerCardP
           <div className="flex items-center space-x-2">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
               theme === 'dark'
-                ? 'bg-yellow-400/20 text-yellow-400'
-                : 'bg-orange-50 border-orange-100'
+                ? 'bg-secondary-800/50 border border-secondary-700'
+                : 'bg-white border border-secondary-200 shadow-sm'
             }`}>
               <Crown className="w-4 h-4" />
             </div>
             <div>
               <h3 className={`font-semibold transition-colors duration-300 ${
                 theme === 'dark'
-                  ? 'text-gray-200'
-                  : 'text-gray-700'
+                  ? 'text-white'
+                  : 'text-secondary-900'
               }`}>{username}</h3>
               <p className={`text-xs transition-colors duration-300 ${
                 theme === 'dark'
-                  ? 'text-gray-400'
-                  : 'text-gray-600'
+                  ? 'text-secondary-400'
+                  : 'text-secondary-600'
               }`}>{game}</p>
             </div>
           </div>
           <div className={`text-xs transition-colors duration-300 ${
             theme === 'dark'
-              ? 'text-gray-400'
-              : 'text-gray-500'
+              ? 'text-secondary-400'
+              : 'text-secondary-600'
           }`}>
             {timeAgo}
           </div>
@@ -76,15 +76,15 @@ const WinnerCard = ({ username, game, amount, timeAgo, multiplier }: WinnerCardP
         <div className="flex items-center justify-between">
           <div className={`text-lg font-bold transition-colors duration-300 ${
             theme === 'dark'
-              ? 'text-yellow-400'
-              : 'text-orange-600'
+              ? 'text-accent-400'
+              : 'text-accent-600'
           }`}>
             {amount}
           </div>
           <div className={`flex items-center space-x-1 px-2 py-1 rounded-full text-xs font-medium ${
             theme === 'dark'
-              ? 'bg-yellow-400/10 text-yellow-400'
-              : 'bg-orange-50 text-orange-600'
+              ? 'bg-secondary-800/50 text-secondary-400'
+              : 'bg-white text-secondary-600'
           }`}>
             <Flame className="w-3 h-3" />
             <span>{multiplier}x</span>
@@ -104,8 +104,8 @@ const FeatureCard = ({ title, description, icon, gradient }: FeatureCardProps) =
       <div className="absolute inset-0 rounded-2xl transition-transform duration-300 group-hover:scale-105">
         <div className={`absolute inset-0 rounded-2xl transition-colors duration-300 ${
           theme === 'dark'
-            ? 'bg-yellow-400/50 border border-yellow-400/20'
-            : 'bg-white shadow-lg border border-gray-100'
+            ? 'bg-secondary-800/50 border border-secondary-700'
+            : 'bg-white shadow-lg border border-secondary-200'
         }`}></div>
         <div className={`absolute bottom-0 left-0 w-full h-1/2 rounded-b-2xl ${gradient} opacity-20 blur-xl transition-opacity duration-300 group-hover:opacity-30`}></div>
       </div>
@@ -114,22 +114,26 @@ const FeatureCard = ({ title, description, icon, gradient }: FeatureCardProps) =
       <div className="relative p-6 backdrop-blur-xl rounded-2xl">
         <div className={`w-12 h-12 rounded-xl border flex items-center justify-center mb-4 transform group-hover:scale-110 transition-all duration-300 ${
           theme === 'dark'
-            ? 'bg-yellow-400/50 border-yellow-400/20'
-            : 'bg-orange-50 border-orange-100'
+            ? 'bg-secondary-800/50 border border-secondary-700'
+            : 'bg-white border border-secondary-200 shadow-sm'
         }`}>
           {React.cloneElement(icon, {
-            className: `w-6 h-6 ${theme === 'dark' ? 'text-yellow-400' : 'text-orange-600'}`
+            className: `w-6 h-6 ${
+              theme === 'dark'
+                ? 'text-primary-400'
+                : 'text-primary-500'
+            }`
           } as React.SVGProps<SVGSVGElement>)}
         </div>
         <h3 className={`text-lg font-bold mb-2 transition-colors duration-300 ${
           theme === 'dark'
-            ? 'text-gray-200 group-hover:text-yellow-400'
-            : 'text-gray-800 group-hover:text-orange-600'
+            ? 'text-white'
+            : 'text-secondary-900'
         }`}>{title}</h3>
         <p className={`text-sm transition-colors duration-300 ${
           theme === 'dark'
-            ? 'text-gray-400'
-            : 'text-gray-600'
+            ? 'text-secondary-400'
+            : 'text-secondary-600'
         }`}>{description}</p>
       </div>
     </div>
@@ -138,6 +142,7 @@ const FeatureCard = ({ title, description, icon, gradient }: FeatureCardProps) =
 
 export default function SlotGameHero() {
   const { theme } = useTheme();
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [winners, setWinners] = useState([
     {
       username: "CryptoKing",
@@ -165,24 +170,110 @@ export default function SlotGameHero() {
   const [jackpotAmount, setJackpotAmount] = useState(999999);
   const [isSpinning, setIsSpinning] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [clickEffects, setClickEffects] = useState<Array<{ x: number; y: number; id: number }>>([]);
   const [slotSymbols, setSlotSymbols] = useState(['7', '$', '', '', '']);
   const [currentSymbols, setCurrentSymbols] = useState(['7', '7', '7']);
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePosition({ x: e.clientX, y: e.clientY });
+  const slides = [
+    {
+      title: "Panda Master",
+      badge: "Premium",
+      tag: "Slot More, Win More! ",
+      description: "Experience the mystical world of pandas in this enchanting game",
+      image: "/images/faq/2.jpg",
+      stats: [
+        { icon: "", value: "500 Spins", label: "Daily Bonus" },
+        { icon: "", value: "2X XP", label: "Premium Boost" },
+        { icon: "", value: "$10,000", label: "Weekly Draw" }
+      ]
+    },
+    {
+      title: "VBlink",
+      badge: "Featured",
+      tag: "All Day is Happy Day! ",
+      description: "Fast-paced action with stunning visual effects",
+      image: "/images/faq/2.jpg",
+      stats: [
+        { icon: "", value: "300 Spins", label: "Welcome Pack" },
+        { icon: "", value: "VIP XP", label: "Fast Level Up" },
+        { icon: "", value: "$5,000", label: "Daily Jackpot" }
+      ]
+    },
+    {
+      title: "Orion Stars",
+      badge: "Popular",
+      tag: "Cash Through Bitcoin! ",
+      description: "Journey through the cosmos for stellar wins",
+      image: "/images/faq/3.jpg",
+      stats: [
+        { icon: "", value: "Crypto", label: "Fast Payouts" },
+        { icon: "", value: "1000x", label: "Max Win" },
+        { icon: "", value: "$50,000", label: "Monthly Draw" }
+      ]
+    },
+    {
+      title: "Golden Treasure",
+      badge: "New",
+      tag: "Win More Every Hour! ",
+      description: "Discover ancient riches and golden opportunities",
+      image: "/images/faq/4.jpg",
+      stats: [
+        { icon: "", value: "Hourly", label: "Bonus Spins" },
+        { icon: "", value: "Lucky XP", label: "Random Boost" },
+        { icon: "", value: "$25,000", label: "Prize Pool" }
+      ]
+    },
+    {
+      title: "Egames",
+      badge: "Featured",
+      tag: "Level Up, Cash Out! ",
+      description: "Collection of exciting electronic gaming experiences",
+      image: "/images/faq/5.jpg",
+      stats: [
+        { icon: "", value: "Games XP", label: "Multi Boost" },
+        { icon: "", value: "Daily", label: "Tournaments" },
+        { icon: "", value: "$15,000", label: "Weekly Prize" }
+      ]
+    },
+    {
+      title: "Milk Way",
+      badge: "Premium",
+      tag: "Instant Bitcoin Wins! ",
+      description: "Explore the galaxy of endless possibilities",
+      image: "/images/faq/4.jpg",
+      stats: [
+        { icon: "", value: " Spins", label: "VIP Package" },
+        { icon: "", value: "Turbo XP", label: "5X Boost" },
+        { icon: "", value: "$100,000", label: "Mega Draw" }
+      ]
+    },
+    {
+      title: "Juwa",
+      badge: "Popular",
+      tag: "Play More, Earn More! ",
+      description: "Traditional games with a modern twist",
+      image: "/images/faq/3.jpg",
+      stats: [
+        { icon: "", value: "200 Spins", label: "Daily Free" },
+        { icon: "", value: "Lucky XP", label: "Asian Boost" },
+        { icon: "", value: "$20,000", label: "Lucky Draw" }
+      ]
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const handleClick = (e: React.MouseEvent) => {
-    const newEffect = {
-      x: e.clientX,
-      y: e.clientY,
-      id: Date.now(),
-    };
-    setClickEffects(prev => [...prev, newEffect]);
-    setTimeout(() => {
-      setClickEffects(prev => prev.filter(effect => effect.id !== newEffect.id));
-    }, 1000);
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
   const handleSpin = () => {
@@ -227,368 +318,494 @@ export default function SlotGameHero() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 8000);
+
+    return () => clearInterval(timer);
+  }, [currentSlide]);
+
   const features = [
     {
       title: 'Bitcoin Cashout',
       description: 'Instant crypto withdrawals 24/7',
       icon: <Bitcoin className="w-6 h-6" />,
       gradient: theme === 'dark' 
-        ? 'bg-gradient-to-r from-yellow-400/20 to-orange-500/20'
-        : 'bg-gradient-to-br from-orange-100/50 to-amber-50/50'
+        ? 'bg-gradient-to-r from-[#0E0E0E] via-[#1A1A1A] to-[#0E0E0E]' 
+        : 'bg-gradient-to-br from-[#F5F5DC] via-[#FFCF9D]/50 to-[#F5F5DC]'
     },
     {
       title: 'Happy Hours',
       description: 'Double rewards all day long',
       icon: <Timer className="w-6 h-6" />,
       gradient: theme === 'dark'
-        ? 'bg-gradient-to-r from-green-400/20 to-emerald-500/20'
-        : 'bg-gradient-to-br from-orange-100/50 to-amber-50/50'
+        ? 'bg-gradient-to-r from-[#0E0E0E] via-[#1A1A1A] to-[#0E0E0E]' 
+        : 'bg-gradient-to-br from-[#F5F5DC] via-[#FFCF9D]/50 to-[#F5F5DC]'
     },
     {
       title: 'Weekly Draw',
       description: '$10,000 prize pool every week',
       icon: <Trophy className="w-6 h-6" />,
       gradient: theme === 'dark'
-        ? 'bg-gradient-to-r from-yellow-400/20 to-orange-500/20'
-        : 'bg-gradient-to-br from-orange-100/50 to-amber-50/50'
+        ? 'bg-gradient-to-r from-[#0E0E0E] via-[#1A1A1A] to-[#0E0E0E]' 
+        : 'bg-gradient-to-br from-[#F5F5DC] via-[#FFCF9D]/50 to-[#F5F5DC]'
     },
     {
       title: 'Monthly Draw',
       description: 'Massive $50,000 monthly rewards',
       icon: <ChipIcon className="w-6 h-6" />,
       gradient: theme === 'dark'
-        ? 'bg-gradient-to-r from-blue-400/20 to-indigo-500/20'
-        : 'bg-gradient-to-br from-orange-100/50 to-amber-50/50'
+        ? 'bg-gradient-to-r from-[#0E0E0E] via-[#1A1A1A] to-[#0E0E0E]' 
+        : 'bg-gradient-to-br from-[#F5F5DC] via-[#FFCF9D]/50 to-[#F5F5DC]'
     }
   ];
 
+  const stats = [
+    { label: 'Active Players', value: '10K+', icon: Users },
+    { label: 'Total Games', value: '500+', icon: Trophy },
+    { label: 'Daily Prizes', value: '$50K', icon: Coins }
+  ];
+
   return (
-    <div 
-      className={`relative overflow-hidden min-h-screen bg-hero-gradient`}
-      onMouseMove={handleMouseMove}
-      onClick={handleClick}
-    >
-      {/* Animated background patterns */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Hexagon grid pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="relative w-full h-full">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-32 h-32"
-                style={{
-                  left: `${(i % 5) * 25}%`,
-                  top: `${Math.floor(i / 5) * 25}%`,
-                  transform: `rotate(${i * 30}deg)`,
-                  opacity: 0.1 + (i % 3) * 0.1
-                }}
-              >
-                <svg viewBox="0 0 100 100" className="w-full h-full text-primary">
-                  <polygon points="50 0, 93.3 25, 93.3 75, 50 100, 6.7 75, 6.7 25" fill="currentColor"/>
-                </svg>
+    <section className="relative mt-20 min-h-screen bg-[#0E0E0E]">
+      {/* Luxury pattern background */}
+      <div className="absolute inset-0">
+        <div className={`absolute inset-0 bg-[url('/images/faq/5.png')] bg-repeat opacity-5
+          ${theme === 'dark' ? 'mix-blend-overlay' : 'mix-blend-multiply'}`} />
+        
+        {/* Diamond Patterns */}
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Top-left large diamond */}
+          <div className={`absolute -top-20 -left-20 w-96 h-96 rotate-45 rounded-3xl
+            ${theme === 'dark' 
+              ? 'bg-gradient-to-br from-[#FFB000]/5 to-transparent' 
+              : 'bg-gradient-to-br from-[#0E0E0E]/5 to-transparent'}`} />
+          
+          {/* Bottom-right large diamond */}
+          <div className={`absolute -bottom-20 -right-20 w-96 h-96 rotate-45 rounded-3xl
+            ${theme === 'dark' 
+              ? 'bg-gradient-to-tl from-[#FFB000]/5 to-transparent' 
+              : 'bg-gradient-to-tl from-[#0E0E0E]/5 to-transparent'}`} />
+          
+          {/* Center decorative diamonds */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <div className={`absolute w-48 h-48 rotate-45 rounded-2xl -translate-x-full -translate-y-full
+              ${theme === 'dark' 
+                ? 'bg-gradient-to-br from-[#FFB000]/3 to-transparent' 
+                : 'bg-gradient-to-br from-[#0E0E0E]/3 to-transparent'}`} />
+            <div className={`absolute w-48 h-48 rotate-45 rounded-2xl translate-x-0 -translate-y-full
+              ${theme === 'dark' 
+                ? 'bg-gradient-to-bl from-[#FFB000]/3 to-transparent' 
+                : 'bg-gradient-to-bl from-[#0E0E0E]/3 to-transparent'}`} />
+            <div className={`absolute w-48 h-48 rotate-45 rounded-2xl -translate-x-full translate-y-0
+              ${theme === 'dark' 
+                ? 'bg-gradient-to-tr from-[#FFB000]/3 to-transparent' 
+                : 'bg-gradient-to-tr from-[#0E0E0E]/3 to-transparent'}`} />
+            <div className={`absolute w-48 h-48 rotate-45 rounded-2xl translate-x-0 translate-y-0
+              ${theme === 'dark' 
+                ? 'bg-gradient-to-tl from-[#FFB000]/3 to-transparent' 
+                : 'bg-gradient-to-tl from-[#0E0E0E]/3 to-transparent'}`} />
+          </div>
+
+          {/* Small diamond accents */}
+          <div className={`absolute top-1/4 left-1/4 w-24 h-24 rotate-45 rounded-xl
+            ${theme === 'dark' 
+              ? 'bg-gradient-to-br from-[#FFB000]/3 to-transparent' 
+              : 'bg-gradient-to-br from-[#0E0E0E]/3 to-transparent'}`} />
+          <div className={`absolute top-3/4 right-1/4 w-24 h-24 rotate-45 rounded-xl
+            ${theme === 'dark' 
+              ? 'bg-gradient-to-tl from-[#FFB000]/3 to-transparent' 
+              : 'bg-gradient-to-tl from-[#0E0E0E]/3 to-transparent'}`} />
+        </div>
+        
+        {/* Elegant light effect */}
+        <div className={`absolute inset-0 bg-gradient-radial from-transparent via-transparent to-black/5`} />
+      </div>
+
+      <div className="relative">
+        {/* Hero Slides */}
+        <div className="relative h-[600px] overflow-hidden rounded-2xl">
+          {/* Current Slide */}
+          <div className="absolute inset-0 slide-enter">
+            <div className="relative h-full game-card">
+              {/* Game Image */}
+              <img
+                src={slides[currentSlide].image}
+                alt={slides[currentSlide].title}
+                className="w-full h-full object-cover"
+              />
+              
+              {/* Badge */}
+              <div className="absolute top-6 right-6">
+                <span className={`px-4 py-2 rounded-full text-sm font-bold ${
+                  slides[currentSlide].badge === 'Premium' ? 'badge-premium' :
+                  slides[currentSlide].badge === 'Featured' ? 'badge-featured' :
+                  slides[currentSlide].badge === 'Popular' ? 'badge-popular' :
+                  'badge-new'
+                }`}>
+                  {slides[currentSlide].badge}
+                </span>
+              </div>
+              
+              {/* Content Overlay */}
+              <div className="absolute inset-0 game-overlay">
+                <div className="h-full flex flex-col justify-center items-center p-8">
+                  {/* Tag Line */}
+                  <div className="mb-8">
+                    <span className="tag-badge px-8 py-3 rounded-full text-lg inline-block">
+                      {slides[currentSlide].tag}
+                    </span>
+                  </div>
+                  
+                  {/* Title Section */}
+                  <h2 className="game-title mb-6 text-center max-w-4xl">
+                    {slides[currentSlide].title}
+                  </h2>
+                  <p className="game-description text-2xl text-[#FFCF9D] mb-14 text-center max-w-2xl">
+                    {slides[currentSlide].description}
+                  </p>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-3 gap-10 mb-14 w-full max-w-5xl">
+                    {slides[currentSlide].stats.map((stat, index) => (
+                      <div key={index} className="stat-card p-8 rounded-xl">
+                        <div className={`game-icon mb-6 ${
+                          index === 0 ? 'game-icon-bounce' :
+                          index === 1 ? 'game-icon-spin' : 'game-icon-pulse'
+                        }`}>
+                          {stat.icon}
+                        </div>
+                        <div className="stat-value mb-3">
+                          {stat.value}
+                        </div>
+                        <div className="stat-label text-[#FFCF9D]">
+                          {stat.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Play Button */}
+                  <button className="play-button group">
+                    <span className="mr-3">Play Now</span>
+                    <span className="group-hover:translate-x-2 transition-transform inline-block duration-500">
+                      →
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Preview Thumbnails */}
+              <div className="absolute -bottom-28 left-1/2 transform -translate-x-1/2 flex gap-6">
+                {slides.map((slide, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`preview-thumbnail w-28 h-20 rounded-xl overflow-hidden ${
+                      currentSlide === index ? 'active' : ''
+                    }`}
+                  >
+                    <img
+                      src={slide.image}
+                      alt={slide.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Arrow Controls */}
+          <button
+            onClick={prevSlide}
+            className="nav-arrow absolute left-6 top-1/2 -translate-y-1/2 flex items-center justify-center"
+            aria-label="Previous slide"
+          >
+            ←
+          </button>
+          <button
+            onClick={nextSlide}
+            className="nav-arrow absolute right-6 top-1/2 -translate-y-1/2 flex items-center justify-center"
+            aria-label="Next slide"
+          >
+            →
+          </button>
+        </div>
+
+        {/* Game Preview Grid */}
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+            {[
+              { name: 'Panda Master', multiplier: '200x', image: '/panda-master.jpg', theme: 'bg-emerald-500' },
+              { name: 'Egames', multiplier: '150x', image: '/egames.jpg', theme: 'bg-blue-500' },
+              { name: 'Orion Stars', multiplier: '300x', image: '/orion.jpg', theme: 'bg-[#0E0E0E]' },
+              { name: 'Milkyway', multiplier: '250x', image: '/milkyway.jpg', theme: 'bg-indigo-500' },
+              { name: 'Vblink', multiplier: '180x', image: '/vblink.jpg', theme: 'bg-pink-500' },
+              { name: 'Golden Treasure', multiplier: '400x', image: '/golden-treasure.jpg', theme: 'bg-amber-500' },
+              { name: 'Juwa', multiplier: '220x', image: '/juwa.jpg', theme: 'bg-rose-500' },
+              { name: 'Fortune Tiger', multiplier: '350x', image: '/fortune-tiger.jpg', theme: 'bg-orange-500' }
+            ].slice(0, 4).map((game, index) => (
+              <div key={index} className="game-preview group">
+                <div className="relative w-full h-full overflow-hidden rounded-2xl">
+                  <img
+          src={`/${index}.jpg`}
+                    alt={`${game.name} Preview`}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E0E]/90 via-[#1A1A1A]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute top-4 right-4">
+                    <span className={`px-3 py-1 rounded-full text-sm font-semibold text-white ${game.theme} bg-opacity-90`}>
+                      HOT
+                    </span>
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 p-6 translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
+                    <h3 className="game-preview-title text-2xl font-bold mb-2 text-[#FFB000]">
+                      {game.name}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-[#FFCF9D] text-sm">Up to</span>
+                        <p className="game-preview-multiplier text-[#FFB000] font-bold">
+                          {game.multiplier}
+                        </p>
+                      </div>
+                      <button className="w-10 h-10 rounded-full bg-[#FFB000] text-[#0E0E0E] flex items-center justify-center transform group-hover:rotate-45 transition-transform duration-500">
+                        →
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
-        
-        {/* Glowing orbs with gradients */}
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-primary/40 to-secondary/40 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute top-20 -left-20 w-60 h-60 bg-gradient-to-tr from-secondary/30 to-accent/30 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-40 right-20 w-40 h-40 bg-gradient-to-bl from-accent/30 to-primary/30 rounded-full blur-3xl animate-pulse-slow" />
-      </div>
 
-      <div className="relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-hero-gradient" />
+        {/* Decorative elements */}
+        <div className="absolute top-20 right-20 w-64 h-64">
+          <div className={`absolute inset-0 rounded-full ${theme === 'dark' ? 'bg-[#FFB000]' : 'bg-[#0E0E0E]'} opacity-5 blur-3xl`} />
+        </div>
+        <div className="absolute bottom-20 left-20 w-64 h-64">
+          <div className={`absolute inset-0 rounded-full ${theme === 'dark' ? 'bg-[#FFB000]' : 'bg-[#0E0E0E]'} opacity-5 blur-3xl`} />
+        </div>
         
-        {/* Floating Chips */}
-        <div className="chip-icon chip-1" />
-        <div className="chip-icon chip-2" />
-        <div className="chip-icon chip-3" />
-        <div className="chip-icon chip-4" />
-        
-        <div className="container mx-auto px-4 py-24 flex flex-col lg:flex-row items-center justify-between gap-12">
-          {/* Left Content */}
-          <div className="flex-1 space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm border border-white/10 interactive-shine">
-                <span className="text-accent animate-pulse">●</span>
-                <span className="text-sm font-medium gold-text-effect">Live Games Available</span>
-              </div>
-              
-              <h1 className={`text-4xl md:text-6xl font-bold tracking-tight ${
-                theme === 'dark'
-                  ? 'text-white'
-                  : 'text-gray-900'
-              } drop-shadow-[0_2px_20px_rgba(139,92,246,0.3)]`}>
-                <span className="relative inline-block hover-tilt">
-                  Win Big,
-                  <div className="absolute -top-8 -right-8 group perspective-[1000px] interactive-float">
-                    <div className="w-16 h-16 relative transform-style-preserve-3d transition-transform duration-500 group-hover:[transform:rotateY(180deg)]">
-                      <div className="absolute w-full h-full backface-hidden animate-spin-glow">
-                        <ChipIcon className="w-full h-full chip-icon-gold" />
-                      </div>
-                      <div className="absolute w-full h-full [transform:rotateY(180deg)] backface-hidden">
-                        <ChipIcon className="w-full h-full chip-icon-gold" />
-                      </div>
-                    </div>
-                  </div>
+        <div className="container mx-auto px-4 py-20 lg:py-32">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
+            {/* Left Content */}
+            <div className="flex-1 space-y-10">
+              {/* Status badge */}
+              <div className={`inline-flex items-center space-x-3 rounded-full px-6 py-3 shadow-lg
+                ${theme === 'dark'
+                  ? 'bg-[#1A1A1A] border border-[#FFB000]/30'
+                  : 'bg-white/80 border border-[#0E0E0E]/30'}`}>
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#FFB000]" />
                 </span>
-                <br />
-                <span className="relative inline-block">
-                  Play More!
-                  <div className="absolute -bottom-8 -right-8 group">
-                    <div className="relative w-16 h-16">
-                      <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-110">
-                        <ChipIcon className="w-full h-full chip-icon-gold chip-icon-gold-glow" />
+                <span className={`text-sm font-medium tracking-wide uppercase ${
+                  theme === 'dark'
+                    ? 'text-[#FFCF9D]'
+                    : 'text-[#0E0E0E]'
+                }`}>Live Games Available</span>
+              </div>
+
+              {/* Royal heading */}
+              <div className="space-y-8">
+                <h1 className={`text-6xl lg:text-7xl font-bold tracking-tight relative
+                  ${theme === 'dark' 
+                    ? 'text-[#F5F5DC]' 
+                    : 'text-[#0E0E0E]'}`}>
+                  <span className="relative inline-block">
+                    <span className={`relative z-10 ${theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'}`}>
+                      Play Slots
+                    </span>
+                    <span className="absolute -top-8 -right-8 text-4xl opacity-80">👑</span>
+                  </span>
+                  <br />
+                  <span className="relative inline-block mt-4">
+                    <span className={`relative z-10 ${theme === 'dark' ? 'text-[#FFCF9D]' : 'text-[#0E0E0E]'}`}>
+                      Win Big!
+                    </span>
+                    <span className="absolute -bottom-8 -right-8 text-4xl opacity-80">💎</span>
+                  </span>
+                </h1>
+                
+                <p className={`text-xl max-w-2xl leading-relaxed ${
+                  theme === 'dark' ? 'text-[#FFCF9D]/90' : 'text-[#0E0E0E]/90'
+                }`}>
+                  Experience the thrill of premium slots in our royal casino. Join thousands of winners and start your winning streak today!
+                </p>
+              </div>
+
+              {/* CTA section */}
+              <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                <button 
+                  onClick={handleSpin}
+                  className={`relative px-10 py-5 rounded-xl font-bold text-xl uppercase tracking-wider shadow-lg
+                    transition-colors duration-300
+                    ${theme === 'dark'
+                      ? 'bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-[#0E0E0E] hover:from-[#FFCF9D] hover:to-[#FFB000]'
+                      : 'bg-gradient-to-r from-[#0E0E0E] to-[#1A1A1A] text-[#F5F5DC] hover:from-[#1A1A1A] hover:to-[#0E0E0E]'}`}>
+                  Start Playing Now
+                </button>
+
+                {/* Jackpot display */}
+                <div className={`px-8 py-5 rounded-xl shadow-lg backdrop-blur-sm
+                  ${theme === 'dark' 
+                    ? 'bg-[#1A1A1A] border border-[#FFB000]/30' 
+                    : 'bg-white/80 border border-[#0E0E0E]/30'}`}>
+                  <div className="flex items-center gap-6">
+                    <span className={`uppercase font-bold tracking-wide ${
+                      theme === 'dark'
+                        ? 'text-[#FFCF9D]'
+                        : 'text-[#0E0E0E]'
+                    }`}>Royal Jackpot</span>
+                    <span className={`text-3xl font-bold ${
+                      theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'
+                    }`}>
+                      ${jackpotAmount.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats display */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-12">
+                {stats.map((stat, i) => (
+                  <div key={i} className={`p-6 rounded-xl shadow-lg backdrop-blur-sm
+                    ${theme === 'dark'
+                      ? 'bg-[#1A1A1A]/80 border border-[#FFB000]/30'
+                      : 'bg-white/80 border border-[#0E0E0E]/30'}`}>
+                    <div className="space-y-3">
+                      <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3
+                        ${theme === 'dark'
+                          ? 'bg-[#0E0E0E] text-[#FFB000]'
+                          : 'bg-[#F5F5DC] text-[#0E0E0E]'}`}>
+                        <stat.icon className="w-6 h-6" />
                       </div>
-                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div className="absolute inset-0 ping-gold">
-                          <ChipIcon className="w-full h-full chip-icon-gold opacity-30" />
+                      <div className={`text-2xl font-bold ${
+                        theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'
+                      }`}>{stat.value}</div>
+                      <div className={`text-sm font-medium uppercase tracking-wider ${
+                        theme === 'dark' ? 'text-[#FFCF9D]/90' : 'text-[#0E0E0E]/90'
+                      }`}>{stat.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Content - Enhanced Slot Machine Preview */}
+            <div className="flex-1 relative">
+              <div className={`relative aspect-square max-w-lg mx-auto shadow-xl backdrop-blur-sm
+                ${theme === 'dark'
+                  ? 'bg-[#1A1A1A]/90 border border-[#FFB000]/30'
+                  : 'bg-white/90 border border-[#0E0E0E]/30'}
+                rounded-2xl overflow-hidden`}>
+                
+                {/* Slot Machine Display */}
+                <div className="relative h-full flex flex-col justify-center items-center p-8">
+                  {/* Machine Top */}
+                  <div className={`w-full h-24 mb-8 rounded-xl relative overflow-hidden shadow-lg
+                    ${theme === 'dark'
+                      ? 'bg-gradient-to-r from-[#1A1A1A] via-[#0E0E0E] to-[#1A1A1A] border border-[#FFB000]/30'
+                      : 'bg-gradient-to-r from-[#F5F5DC] via-white to-[#F5F5DC] border border-[#0E0E0E]/30'}`}>
+                    <div className="absolute top-3 right-3 text-2xl opacity-90">👑</div>
+                    <div className="flex justify-center items-center h-full">
+                      <span className={`text-2xl font-bold uppercase tracking-[0.2em] ${
+                        theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'
+                      }`}>Royal Fortune</span>
+                    </div>
+                  </div>
+
+                  {/* Slot Reels */}
+                  <div className="flex gap-6 mb-12">
+                    {currentSymbols.map((symbol, index) => (
+                      <div
+                        key={index}
+                        className={`w-28 h-28 flex items-center justify-center rounded-xl text-5xl relative shadow-lg overflow-hidden
+                          ${theme === 'dark'
+                            ? 'bg-gradient-to-br from-[#1A1A1A] to-[#0E0E0E] border border-[#FFB000]/30'
+                            : 'bg-gradient-to-br from-[#F5F5DC] to-white border border-[#0E0E0E]/30'}
+                          ${isSpinning ? 'slot-glow' : ''}`}
+                      >
+                        <div className={`flex items-center justify-center transition-all duration-300 ${isSpinning ? 'slot-spinning' : ''}`}>
+                          {symbol === '7' ? '7️⃣' : 
+                           symbol === '$' ? '💰' : 
+                           symbol === '' ? '👑' : symbol}
                         </div>
+                        {/* Light effects */}
+                        <div className={`absolute inset-0 bg-gradient-to-b from-white/20 to-transparent opacity-0 transition-opacity duration-300 ${isSpinning ? 'opacity-100' : ''}`} />
+                        <div className={`absolute inset-0 border-t-2 border-b-2 border-[#FFB000]/20 ${isSpinning ? 'opacity-100' : 'opacity-0'}`} />
                       </div>
-                    </div>
+                    ))}
                   </div>
-                </span>
-              </h1>
 
-              <p className="text-lg text-white/60 max-w-xl">
-                Experience the thrill of our premium casino games. Play smart, win big, and join thousands of happy players.
-              </p>
-            </div>
+                  {/* Jackpot Display */}
+                  <div className={`text-3xl font-bold mb-8 ${theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'} jackpot-text`}>
+                    ${jackpotAmount.toLocaleString()}
+                  </div>
 
-            <div className="flex flex-wrap gap-4">
-              <button className="px-8 py-4 bg-gradient-to-r from-primary to-secondary rounded-lg font-semibold text-white shadow-lg hover:shadow-primary/50 transition-all duration-300 hover:-translate-y-0.5 interactive-shine click-effect">
-                Start Playing
-              </button>
-              <button className="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg font-semibold text-white hover:bg-white/10 transition-all duration-300 interactive-shine click-effect">
-                Learn More
-              </button>
-            </div>
+                  {/* Spin Button */}
+                  <button
+                    onClick={handleSpin}
+                    disabled={isSpinning}
+                    className={`px-12 py-4 rounded-full font-bold text-xl uppercase tracking-wider
+                      transition-all duration-300 transform hover:scale-105 relative overflow-hidden
+                      ${isSpinning ? 'cursor-not-allowed opacity-70' : 'hover:shadow-lg'}
+                      ${theme === 'dark'
+                        ? 'bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-[#0E0E0E]'
+                        : 'bg-gradient-to-r from-[#0E0E0E] to-[#1A1A1A] text-[#F5F5DC]'}`}
+                  >
+                    <span className={`relative z-10 ${isSpinning ? 'animate-pulse' : ''}`}>
+                      {isSpinning ? 'Spinning...' : 'SPIN NOW!'}
+                    </span>
+                    <div className={`absolute inset-0 bg-gradient-to-r from-[#FFB000]/20 to-[#FFCF9D]/20 transform transition-transform duration-500
+                      ${isSpinning ? 'translate-x-full' : '-translate-x-full'}`} />
+                  </button>
+                </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8">
-              {[
-                { label: 'Active Players', value: '10K+', icon: Users },
-                { label: 'Total Games', value: '500+', icon: Trophy },
-                { label: 'Daily Prizes', value: '$50K', icon: Coins }
-              ].map((stat, i) => (
-                <div key={i} className="text-center interactive-float sparkle-effect">
-                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl stats-icon-container mb-3 click-effect">
-                    <stat.icon className="w-6 h-6 icon-gold icon-gold-animated interactive-rotate" />
-                  </div>
-                  <div className="text-2xl font-bold gold-text-effect">{stat.value}</div>
-                  <div className="text-sm text-white/60">{stat.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
+                {/* Subtle Corner Accents */}
+                <div className="absolute top-3 left-3 text-2xl opacity-10">💎</div>
+                <div className="absolute top-3 right-3 text-2xl opacity-10">💎</div>
+                <div className="absolute bottom-3 left-3 text-2xl opacity-10">💎</div>
+                <div className="absolute bottom-3 right-3 text-2xl opacity-10">💎</div>
+              </div>
 
-          {/* Right Content - Game Preview */}
-          <div className="flex-1 relative">
-            <div className="game-preview-container aspect-square">
-              {/* Floating Mini Previews */}
-              <div className="mini-preview mini-preview-1">
-                <div className="mini-preview-content">
-                  <Image
-                    src="/images/faq/2.jpg"
-                    alt="Mega Fortune"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="mini-preview-overlay">
-                    <div className="mini-preview-title">Mega Fortune</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mini-preview mini-preview-2">
-                <div className="mini-preview-content">
-                  <Image
-                    src="/images/faq/3.jpg"
-                    alt="Golden Goddess"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="mini-preview-overlay">
-                    <div className="mini-preview-title">Golden Goddess</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mini-preview mini-preview-3">
-                <div className="mini-preview-content">
-                  <Image
-                    src="/images/faq/1.jpg"
-                    alt="Starburst"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="mini-preview-overlay">
-                    <div className="mini-preview-title">Starburst</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mini-preview mini-preview-4">
-                <div className="mini-preview-content">
-                  <Image
-                    src="/images/faq/3.jpg"
-                    alt="Book of Dead"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="mini-preview-overlay">
-                    <div className="mini-preview-title">Book of Dead</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mini-preview mini-preview-5">
-                <div className="mini-preview-content">
-                  <Image
-                    src="/images/faq/3.jpg"
-                    alt="Gonzo's Quest"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                  <div className="mini-preview-overlay">
-                    <div className="mini-preview-title">Gonzo's Quest</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Notches */}
-              <div className="game-preview-notches">
-                <div className="game-preview-notch game-preview-notch-top" />
-                <div className="game-preview-notch game-preview-notch-bottom" />
-                <div className="game-preview-notch game-preview-notch-left" />
-                <div className="game-preview-notch game-preview-notch-right" />
-              </div>
-              
-              {/* Corners */}
-              <div className="game-preview-corner game-preview-corner-tl" />
-              <div className="game-preview-corner game-preview-corner-tr" />
-              <div className="game-preview-corner game-preview-corner-bl" />
-              <div className="game-preview-corner game-preview-corner-br" />
-              
-              <div className="game-preview-content w-full h-full">
-                {/* Scan line effect */}
-                <div className="game-preview-scan" />
-                
-                {/* Glitch effect */}
-                <div className="game-preview-glitch" />
-                
-                <Image
-                  src="/images/faq/1.jpg"
-                  alt="Game Preview"
-                  fill
-                  className="object-cover"
-                />
-                
-                {/* Overlay gradients */}
-                <div className="absolute inset-0">
-                  <div className="absolute inset-0" />
-                  <div className="absolute inset-0 " />
-                </div>
-                
-                {/* Game info overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-8 space-y-4">
-                  <div className="flex items-center space-x-3 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 w-fit interactive-shine">
-                    <div className="w-2 h-2 bg-gradient-to-r from-[#FFD700] to-[#DAA520] rounded-full animate-pulse" />
-                    <span className="text-sm font-medium gold-text-effect">Live Now</span>
-                  </div>
-                  
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <h3 className="text-3xl font-bold text-white">Premium Slots</h3>
-                      <p className="text-white/60">Experience the thrill of winning big</p>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <button className="px-6 py-3 bg-gradient-to-r from-primary/90 to-secondary/90 backdrop-blur-sm rounded-xl text-white font-semibold
-                        hover:from-primary hover:to-secondary transition-all duration-300 
-                        hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5
-                        focus:ring-2 focus:ring-primary/50 focus:outline-none">
-                        Play Now
-                      </button>
-                      
-                      <div className="flex items-center space-x-4">
-                        <div className="flex -space-x-3">
-                          {[...Array(4)].map((_, i) => (
-                            <div 
-                              key={i} 
-                              className="w-10 h-10 rounded-full border-2 border-white/20 bg-white/10 backdrop-blur-sm
-                                hover:scale-110 hover:z-10 transition-transform duration-200"
-                              style={{
-                                transform: `translateX(${i * 2}px)`,
-                                zIndex: 4 - i
-                              }}
-                            />
-                          ))}
-                          <div className="w-10 h-10 rounded-full border-2 border-white/20 bg-white/10 backdrop-blur-sm 
-                            flex items-center justify-center text-sm font-semibold text-white/90
-                            hover:scale-110 transition-transform duration-200"
-                            style={{ transform: 'translateX(8px)' }}>
-                            +99
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              {/* Subtle Background Element */}
+              <div className="absolute -inset-4 -z-10">
+                <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 transform -translate-y-1/2
+                  ${theme === 'dark' ? 'text-[#FFB000]' : 'text-[#0E0E0E]'} opacity-5 text-8xl`}>
+                  👑
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Background particles */}
-        <div className="absolute inset-0 pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute group"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${5 + Math.random() * 5}s`,
-              }}
-            >
-              <div className="w-8 h-8 animate-float-shine transition-all duration-300 group-hover:scale-125">
-                <ChipIcon className="w-full h-full chip-icon-gold opacity-20" />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mouse trail effect */}
-        {clickEffects.map(effect => (
-          <div
-            key={effect.id}
-            className="absolute pointer-events-none"
-            style={{
-              left: effect.x - 32,
-              top: effect.y - 32,
-            }}
-          >
-            <div className="relative">
-              <div className="absolute inset-0 expand-glow-gold">
-                <ChipIcon className="w-full h-full chip-icon-gold opacity-20" />
-              </div>
-              <div className="absolute inset-0 ping-gold">
-                <ChipIcon className="w-full h-full chip-icon-gold opacity-10" />
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
-    </div>
+
+      {/* Mouse trail effect - single chip */}
+      <div
+        className="pointer-events-none fixed w-12 h-12 transition-all duration-300"
+        style={{
+          left: mousePosition.x - 24,
+          top: mousePosition.y - 24,
+          transform: `rotate(${Math.atan2(mousePosition.y, mousePosition.x) * (180 / Math.PI)}deg)`,
+        }}
+      >
+        <div className="relative">
+          <div className={`absolute inset-0 expand-glow-gold transition-all duration-500 ${
+            theme === 'dark' ? 'opacity-20' : 'opacity-10'
+          }`}>
+            <ChipIcon className="w-full h-full text-[#FFB000]" />
+          </div>
+          <div className={`absolute inset-0 ping-gold transition-all duration-500 ${
+            theme === 'dark' ? 'opacity-10' : 'opacity-5'
+          }`}>
+            <ChipIcon className="w-full h-full text-[#FFB000]" />
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

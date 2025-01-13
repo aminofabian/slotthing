@@ -20,8 +20,8 @@ export function ClientThemeLayout({ children }: { children: React.ReactNode }) {
         {/* Background Gradient */}
         <div className={`absolute inset-0 transition-colors duration-300 ${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-purple-950/50 via-purple-900/50 to-purple-950/50'
-            : 'bg-gradient-to-br from-white/50 via-purple-50/50 to-white/50'
+            ? 'bg-gradient-to-br from-[#004225]/50 via-[#004225]/50 to-[#004225]/50'
+            : 'bg-gradient-to-br from-white/50 via-[#004225]/50 to-white/50'
         }`} />
         
         {/* Noise Texture */}
@@ -30,13 +30,13 @@ export function ClientThemeLayout({ children }: { children: React.ReactNode }) {
 
       {/* Content Layer */}
       <div className={`relative z-10 flex flex-col min-h-screen transition-colors duration-300 ${
-        theme === 'dark' ? 'bg-purple-950' : 'bg-white'
+        theme === 'dark' ? 'bg-[#004225]' : 'bg-white'
       }`}>
         {/* Navbar with glass effect */}
         <div className={`sticky top-0 z-50 backdrop-blur-sm border-b transition-colors duration-300 ${
           theme === 'dark'
-            ? 'bg-purple-950/95 border-yellow-400/20'
-            : 'bg-white/95 border-purple-200'
+            ? 'bg-[#004225]/95 border-yellow-400/20'
+            : 'bg-white/95 border-[#004225]'
         }`}>
           <NavBar />
         </div>
