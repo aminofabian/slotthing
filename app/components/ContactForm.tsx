@@ -14,7 +14,25 @@ const ContactForm = () => {
   });
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -69,8 +87,8 @@ const ContactForm = () => {
             key={i}
             className="absolute w-1 h-1 bg-[#FFB000]"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: Math.random() * (dimensions.width || 0),
+              y: Math.random() * (dimensions.height || 0),
               scale: 0,
               opacity: 0 
             }}
