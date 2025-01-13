@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Coins, Diamond, Crown, Flame, Sparkles, Zap, Timer, Info } from 'lucide-react';
@@ -257,6 +257,16 @@ const GameCard = ({ game, index }: { game: Game; index: number }) => {
 
 const GamesSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<Game['category'] | 'all'>('all');
+  const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
+
+  useEffect(() => {
+    const particleCount = 30;
+    const initialParticles = Array.from({ length: particleCount }).map(() => ({
+      x: Math.random() * (window.innerWidth || 0),
+      y: Math.random() * (window.innerHeight || 0)
+    }));
+    setParticles(initialParticles);
+  }, []);
 
   const categories = [
     { id: 'all', label: 'All Games', icon: <Sparkles className="w-5 h-5" /> },
@@ -278,13 +288,13 @@ const GamesSection = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
         
         {/* Animated Particles */}
-        {[...Array(30)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-[#FFB000]"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: particle.x,
+              y: particle.y,
               scale: 0,
               opacity: 0 
             }}
