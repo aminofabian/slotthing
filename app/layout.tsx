@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Playfair_Display } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from './context/ThemeContext'
+import { Providers } from './components/Providers'
 import NavBar from './components/NavBar'
 
 const playfair = Playfair_Display({
@@ -22,18 +22,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} font-serif antialiased`}>
-        <ThemeProvider>
+        <Providers>
           <div className="relative min-h-screen overflow-hidden">
             {/* Background noise texture */}
             <div className="fixed inset-0 bg-[url('/noise.png')] opacity-[0.02] pointer-events-none"></div>
             
             {/* Content */}
             <div className="relative">
-              <NavBar />
-              <main>{children}</main>
+              <div id="theme-wrapper">
+                <NavBar />
+                <main>{children}</main>
+              </div>
             </div>
           </div>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

@@ -88,6 +88,11 @@ export const Hero = () => {
   const [isPaused, setIsPaused] = useState(false);
   const dragX = useMotionValue(0);
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -101,6 +106,10 @@ export const Hero = () => {
 
     return () => clearInterval(intervalRef);
   }, [isPaused]);
+
+  if (!mounted) {
+    return null; // or a loading state
+  }
 
   const onDragEnd = () => {
     const x = dragX.get();
