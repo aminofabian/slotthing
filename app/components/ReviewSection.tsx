@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Quote, ThumbsUp, User, MessageCircle, Trophy, Crown, Sparkles } from 'lucide-react';
@@ -225,6 +225,27 @@ const ReviewCard = ({ review }: { review: Review }) => {
 };
 
 const ReviewSection = () => {
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <section className="relative py-32 overflow-hidden bg-[#0E0E0E]">
       {/* Background Effects */}
@@ -257,8 +278,8 @@ const ReviewSection = () => {
             key={i}
             className="absolute w-6 h-6"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height,
               scale: 0,
               opacity: 0 
             }}

@@ -311,7 +311,27 @@ const GameCard = ({ game, index }: { game: Game; index: number }) => {
 const GamesSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<Game['category'] | 'all'>('all');
   const [isHovered, setIsHovered] = useState(false);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const categories = [
     { id: 'all', label: 'All Games', icon: <Trophy className="w-5 h-5" /> },
@@ -357,8 +377,8 @@ const GamesSection = () => {
             key={i}
             className="absolute w-6 h-6"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height,
               scale: 0,
               opacity: 0 
             }}
