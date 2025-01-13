@@ -8,7 +8,7 @@ const blogPosts = [
   {
     title: "Epic Jackpot Saga",
     excerpt: "From $10 to $1M: The Story That Shocked Vegas",
-    image: "/blog/winners.jpg",
+    image: "/0.jpg",
     category: "Legendary Wins",
     icon: Trophy,
     date: "12 Hours Ago",
@@ -22,7 +22,7 @@ const blogPosts = [
   {
     title: "Neon Dynasty Arrives",
     excerpt: "Enter the Cyberpunk Realm of Future Slots",
-    image: "/blog/new-games.jpg",
+    image: "/1.jpg",
     category: "Game Launch",
     icon: Gamepad2,
     date: "2 Days Ago",
@@ -36,7 +36,7 @@ const blogPosts = [
   {
     title: "Master the Matrix",
     excerpt: "AI Reveals Patterns in Chaos Theory Gaming",
-    image: "/blog/tips.jpg",
+    image: "/2.jpg",
     category: "Neural Edge",
     icon: TrendingUp,
     date: "3 Days Ago",
@@ -50,7 +50,7 @@ const blogPosts = [
   {
     title: "Million Dollar Rush",
     excerpt: "Global Tournament with Live Tracking",
-    image: "/blog/tournament.jpg",
+    image: "/3.jpg",
     category: "Live Event",
     icon: Flame,
     date: "Starting Soon",
@@ -141,6 +141,7 @@ const BlogSection = () => {
                   src={blogPosts[activeIndex].image}
                   alt={blogPosts[activeIndex].title}
                   fill
+                  priority={activeIndex === 0}
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
