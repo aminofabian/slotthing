@@ -94,16 +94,35 @@ const ContactForm = () => {
 
   return (
     <section className="relative min-h-screen py-32 overflow-hidden bg-[#0E0E0E]">
-      {/* Background Effects */}
+      {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
         
-        {/* Animated Particles */}
+        {/* Slot Machine Reels Background Effect */}
+        <div className="absolute inset-0 flex justify-around opacity-10">
+          {[1, 2, 3].map((reel) => (
+            <motion.div
+              key={reel}
+              className="h-full w-px bg-gradient-to-b from-transparent via-[#FFB000] to-transparent"
+              animate={{
+                y: [0, 1000],
+                opacity: [0.1, 0.5, 0.1]
+              }}
+              transition={{
+                duration: 2 + reel,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Animated Coins */}
         {particles.map((particle, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-[#FFB000]"
+            className="absolute w-6 h-6"
             initial={{ 
               x: particle.x,
               y: particle.y,
@@ -112,6 +131,7 @@ const ContactForm = () => {
             }}
             animate={{ 
               y: [null, Math.random() * -500],
+              rotate: [0, 360],
               scale: [0, 1, 0],
               opacity: [0, 0.8, 0]
             }}
@@ -120,7 +140,11 @@ const ContactForm = () => {
               repeat: Infinity,
               ease: "linear"
             }}
-          />
+          >
+            <div className="w-full h-full bg-[#FFB000] rounded-full flex items-center justify-center">
+              <div className="w-4 h-4 bg-[#FFCF9D] rounded-full transform scale-75" />
+            </div>
+          </motion.div>
         ))}
       </div>
 
@@ -130,11 +154,27 @@ const ContactForm = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h2 className="text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-4">
-            Get in Touch
-          </h2>
+          <div className="relative inline-block">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-4">
+              Jackpot Support
+            </h2>
+            <motion.div
+              className="absolute -right-8 -top-8"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <Star className="w-8 h-8 text-[#FFB000]" />
+            </motion.div>
+          </div>
           <p className="text-[#FFCF9D]/70 text-lg max-w-2xl mx-auto">
-            Have a question or need assistance? Our team is here to help you 24/7.
+            Hit the jackpot with our 24/7 VIP support team! 🎰
           </p>
         </motion.div>
 
@@ -143,22 +183,25 @@ const ContactForm = () => {
             ref={formRef}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="relative bg-[#1A1A1A]/50 backdrop-blur-xl rounded-3xl p-8 border border-[#FFB000]/20"
+            className="relative bg-[#1A1A1A]/80 backdrop-blur-xl rounded-3xl p-8 border border-[#FFB000]/20 shadow-[0_0_50px_rgba(255,176,0,0.1)]"
             style={{
               perspective: '1000px',
               transformStyle: 'preserve-3d'
             }}
           >
+            {/* Slot Machine Frame */}
+            <div className="absolute inset-0 rounded-3xl border-8 border-[#FFB000]/10" />
+            
             {/* Interactive Spotlight Effect */}
             <div 
               className="absolute inset-0 rounded-3xl opacity-20 pointer-events-none"
               style={{
-                background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 176, 0, 0.15), transparent 25%)`
+                background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 176, 0, 0.3), transparent 25%)`
               }}
             />
 
-            {/* Floating Icons */}
-            <div className="absolute -top-6 -right-6 w-12 h-12">
+            {/* Decorative Elements */}
+            <div className="absolute -top-8 -right-8 w-16 h-16">
               <motion.div
                 animate={{
                   rotate: [0, 360],
@@ -169,9 +212,26 @@ const ContactForm = () => {
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                className="w-full h-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
+                className="w-full h-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center shadow-lg"
               >
-                <MessageSquare className="w-6 h-6 text-black" />
+                <MessageSquare className="w-8 h-8 text-black" />
+              </motion.div>
+            </div>
+
+            <div className="absolute -bottom-6 -left-6 w-12 h-12">
+              <motion.div
+                animate={{
+                  scale: [1, 1.2, 1],
+                  rotate: [0, -360]
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                className="w-full h-full bg-gradient-to-r from-[#FFCF9D] to-[#FFB000] rounded-full flex items-center justify-center shadow-lg"
+              >
+                <Zap className="w-6 h-6 text-black" />
               </motion.div>
             </div>
 
@@ -191,16 +251,16 @@ const ContactForm = () => {
                     repeat: Infinity,
                     ease: "linear"
                   }}
-                  className="w-20 h-20 mx-auto mb-6 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
+                  className="w-24 h-24 mx-auto mb-6 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(255,176,0,0.3)]"
                 >
-                  <Sparkles className="w-10 h-10 text-black" />
+                  <Sparkles className="w-12 h-12 text-black" />
                 </motion.div>
-                <h3 className="text-2xl font-bold text-[#FFCF9D] mb-4">Message Sent Successfully!</h3>
-                <p className="text-[#FFCF9D]/70">We'll get back to you as soon as possible.</p>
+                <h3 className="text-3xl font-bold text-[#FFCF9D] mb-4">🎰 Jackpot! Message Sent!</h3>
+                <p className="text-[#FFCF9D]/70">Our VIP support team will be with you shortly.</p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Input */}
+              <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                {/* Input Fields */}
                 <motion.div
                   variants={inputVariants}
                   animate={formState.focused === 'name' ? 'focused' : 'unfocused'}
@@ -212,21 +272,20 @@ const ContactForm = () => {
                   <input
                     type="text"
                     placeholder="Your Name"
-                    required
-                    className="w-full h-14 bg-[#1A1A1A] rounded-xl pl-12 pr-4 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none"
+                    value={formState.name}
+                    onChange={(e) => setFormState(prev => ({ ...prev, name: e.target.value }))}
                     onFocus={() => setFormState(prev => ({ ...prev, focused: 'name' }))}
                     onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
-                    onChange={e => setFormState(prev => ({ ...prev, name: e.target.value }))}
+                    className="w-full bg-black/30 border-2 border-[#FFB000]/20 rounded-xl py-3 px-12 text-[#FFCF9D] placeholder-[#FFCF9D]/50 focus:border-[#FFB000]/50 focus:outline-none focus:ring-2 focus:ring-[#FFB000]/20 transition-all"
                   />
                   <motion.div
-                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 pointer-events-none"
                     animate={{
-                      scale: formState.focused === 'name' ? 1.05 : 1
+                      opacity: formState.focused === 'name' ? 1 : 0
                     }}
                   />
                 </motion.div>
 
-                {/* Email Input */}
                 <motion.div
                   variants={inputVariants}
                   animate={formState.focused === 'email' ? 'focused' : 'unfocused'}
@@ -238,21 +297,20 @@ const ContactForm = () => {
                   <input
                     type="email"
                     placeholder="Your Email"
-                    required
-                    className="w-full h-14 bg-[#1A1A1A] rounded-xl pl-12 pr-4 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none"
+                    value={formState.email}
+                    onChange={(e) => setFormState(prev => ({ ...prev, email: e.target.value }))}
                     onFocus={() => setFormState(prev => ({ ...prev, focused: 'email' }))}
                     onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
-                    onChange={e => setFormState(prev => ({ ...prev, email: e.target.value }))}
+                    className="w-full bg-black/30 border-2 border-[#FFB000]/20 rounded-xl py-3 px-12 text-[#FFCF9D] placeholder-[#FFCF9D]/50 focus:border-[#FFB000]/50 focus:outline-none focus:ring-2 focus:ring-[#FFB000]/20 transition-all"
                   />
                   <motion.div
-                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 pointer-events-none"
                     animate={{
-                      scale: formState.focused === 'email' ? 1.05 : 1
+                      opacity: formState.focused === 'email' ? 1 : 0
                     }}
                   />
                 </motion.div>
 
-                {/* Message Input */}
                 <motion.div
                   variants={inputVariants}
                   animate={formState.focused === 'message' ? 'focused' : 'unfocused'}
@@ -263,68 +321,30 @@ const ContactForm = () => {
                   </div>
                   <textarea
                     placeholder="Your Message"
-                    required
-                    rows={5}
-                    className="w-full bg-[#1A1A1A] rounded-xl pl-12 pr-4 py-3 text-[#FFCF9D] placeholder-[#FFCF9D]/50 border border-[#FFB000]/20 focus:border-[#FFB000] transition-all outline-none resize-none"
+                    value={formState.message}
+                    onChange={(e) => setFormState(prev => ({ ...prev, message: e.target.value }))}
                     onFocus={() => setFormState(prev => ({ ...prev, focused: 'message' }))}
                     onBlur={() => setFormState(prev => ({ ...prev, focused: '' }))}
-                    onChange={e => setFormState(prev => ({ ...prev, message: e.target.value }))}
+                    rows={4}
+                    className="w-full bg-black/30 border-2 border-[#FFB000]/20 rounded-xl py-3 px-12 text-[#FFCF9D] placeholder-[#FFCF9D]/50 focus:border-[#FFB000]/50 focus:outline-none focus:ring-2 focus:ring-[#FFB000]/20 transition-all resize-none"
                   />
                   <motion.div
-                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 -z-10"
+                    className="absolute inset-0 rounded-xl bg-[#FFB000]/5 pointer-events-none"
                     animate={{
-                      scale: formState.focused === 'message' ? 1.05 : 1
+                      opacity: formState.focused === 'message' ? 1 : 0
                     }}
                   />
                 </motion.div>
 
-                {/* Submit Button */}
-                <div className="flex justify-center">
-                  <motion.button
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    whileHover={{ 
-                      scale: 1.05,
-                      textShadow: "0 0 8px rgb(255,255,255)",
-                      boxShadow: "0 0 30px rgba(255,176,0,0.6)"
-                    }}
-                    className="group relative"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity animate-pulse"></div>
-                    <div className="relative px-8 py-3 rounded-xl bg-gradient-to-r from-[#FFB000] via-[#FFCF9D] to-[#FFB000] border-2 border-[#FFB000]/30 backdrop-blur-xl overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[60deg] transform-gpu transition-transform group-hover:translate-x-full duration-1000"></div>
-                      <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
-                      <span className="flex items-center gap-3 text-black text-base md:text-lg font-black tracking-wider">
-                        <span className="relative bg-black/10 p-1.5 rounded-lg">
-                          <Send className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" />
-                          <span className="absolute inset-0 bg-white/20 blur-sm rounded-lg"></span>
-                        </span>
-                        <span className="relative">
-                          <span className="absolute -inset-1 bg-white/20 blur-sm rounded-lg"></span>
-                          <span className="relative">SEND MESSAGE</span>
-                        </span>
-                      </span>
-                    </div>
-                  </motion.button>
-                </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute -bottom-6 -left-6 w-12 h-12">
-                  <motion.div
-                    animate={{
-                      rotate: [0, -360],
-                      y: [0, 10, 0]
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                    className="w-full h-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-full flex items-center justify-center"
-                  >
-                    <Star className="w-6 h-6 text-black" />
-                  </motion.div>
-                </div>
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-bold py-4 px-8 rounded-xl flex items-center justify-center space-x-2 shadow-[0_0_20px_rgba(255,176,0,0.3)] hover:shadow-[0_0_30px_rgba(255,176,0,0.5)] transition-all"
+                >
+                  <span>Send Message</span>
+                  <Send className="w-5 h-5" />
+                </motion.button>
               </form>
             )}
           </motion.div>

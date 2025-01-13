@@ -73,26 +73,54 @@ const FAQCard = ({ faq, isOpen, onToggle, index }: {
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
     >
-      {/* Floating Elements */}
+      {/* Slot Machine Decorative Elements */}
       <AnimatePresence>
         {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0, x: -20 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            exit={{ opacity: 0, scale: 0, x: -20 }}
-            className="absolute -left-4 top-1/2 -translate-y-1/2"
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] flex items-center justify-center">
-              {faq.icon}
-            </div>
-          </motion.div>
+          <>
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: -20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0, x: -20 }}
+              className="absolute -left-6 top-1/2 -translate-y-1/2"
+            >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] p-0.5">
+                <div className="w-full h-full rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center">
+                  <motion.div
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="text-[#FFB000]"
+                  >
+                    {faq.icon}
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0, x: 20 }}
+              className="absolute -right-6 top-1/2 -translate-y-1/2"
+            >
+              <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#FFCF9D] to-[#FFB000] p-0.5">
+                <div className="w-full h-full rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center">
+                  <motion.div
+                    animate={{ rotate: [0, -360] }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                    className="text-[#FFCF9D]"
+                  >
+                    <Sparkles className="w-6 h-6" />
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
       <motion.div
         layout
         onClick={onToggle}
-        className="relative bg-[#1A1A1A]/50 backdrop-blur-xl rounded-2xl p-6 cursor-pointer border border-[#FFB000]/20 group"
+        className="relative bg-[#1A1A1A]/80 backdrop-blur-xl rounded-2xl p-6 cursor-pointer border-2 border-[#FFB000]/20 group overflow-hidden"
         style={{ perspective: '1000px' }}
         whileHover={{
           scale: 1.02,
@@ -101,21 +129,39 @@ const FAQCard = ({ faq, isOpen, onToggle, index }: {
           transition: { duration: 0.2 }
         }}
       >
+        {/* Slot Machine Frame */}
+        <div className="absolute inset-0 rounded-2xl border-8 border-[#FFB000]/5" />
+        
+        {/* Shine Effect */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 translate-x-[-100%]"
+          animate={isHovered ? {
+            translateX: ['100%']
+          } : {}}
+          transition={{
+            duration: 0.8,
+            ease: "easeInOut"
+          }}
+        />
+
         {/* Question */}
         <motion.div
           layout
-          className="flex items-center justify-between"
+          className="flex items-center justify-between relative z-10"
         >
           <motion.h3 
             layout
-            className="text-xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent pr-8"
+            className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent pr-8"
           >
             {faq.question}
           </motion.h3>
           <motion.div
-            animate={{ rotate: isOpen ? 180 : 0 }}
+            animate={{ 
+              rotate: isOpen ? 180 : 0,
+              scale: isHovered ? 1.1 : 1
+            }}
             transition={{ duration: 0.3 }}
-            className="text-[#FFB000]"
+            className="text-[#FFB000] bg-black/20 rounded-full p-1"
           >
             <ChevronDown className="w-6 h-6" />
           </motion.div>
@@ -131,13 +177,17 @@ const FAQCard = ({ faq, isOpen, onToggle, index }: {
               transition={{ duration: 0.3 }}
               className="overflow-hidden"
             >
-              <motion.p
+              <motion.div
                 initial={{ y: -20 }}
                 animate={{ y: 0 }}
-                className="text-[#FFCF9D]/70 mt-4"
+                className="relative"
               >
-                {faq.answer}
-              </motion.p>
+                <motion.p className="text-[#FFCF9D]/70 mt-4 relative z-10">
+                  {faq.answer}
+                </motion.p>
+                {/* Answer Background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FFB000]/5 to-transparent rounded-xl" />
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -149,6 +199,11 @@ const FAQCard = ({ faq, isOpen, onToggle, index }: {
             background: `radial-gradient(circle at center, ${faq.color}40 0%, transparent 70%)`
           }}
         />
+
+        {/* Slot Machine Light Effects */}
+        {isHovered && (
+          <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#FFB000]/50 to-transparent" />
+        )}
       </motion.div>
     </motion.div>
   );
@@ -187,11 +242,30 @@ const FAQSection = () => {
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
         
-        {/* Animated Particles */}
+        {/* Slot Machine Reels Effect */}
+        <div className="absolute inset-0 flex justify-around opacity-10">
+          {[1, 2, 3].map((reel) => (
+            <motion.div
+              key={reel}
+              className="h-full w-px bg-gradient-to-b from-transparent via-[#FFB000] to-transparent"
+              animate={{
+                y: [0, 1000],
+                opacity: [0.1, 0.5, 0.1]
+              }}
+              transition={{
+                duration: 2 + reel,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+          ))}
+        </div>
+        
+        {/* Animated Coins */}
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-[#FFB000]"
+            className="absolute w-6 h-6"
             initial={{ 
               x: Math.random() * window.innerWidth,
               y: Math.random() * window.innerHeight,
@@ -200,6 +274,7 @@ const FAQSection = () => {
             }}
             animate={{ 
               y: [null, Math.random() * -500],
+              rotate: [0, 360],
               scale: [0, 1, 0],
               opacity: [0, 0.8, 0]
             }}
@@ -208,7 +283,11 @@ const FAQSection = () => {
               repeat: Infinity,
               ease: "linear"
             }}
-          />
+          >
+            <div className="w-full h-full bg-[#FFB000] rounded-full flex items-center justify-center">
+              <div className="w-4 h-4 bg-[#FFCF9D] rounded-full transform scale-75" />
+            </div>
+          </motion.div>
         ))}
       </div>
 
@@ -219,42 +298,62 @@ const FAQSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <motion.div 
-            className="inline-block mb-4"
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] flex items-center justify-center">
-              <HelpCircle className="w-8 h-8 text-black" />
-            </div>
-          </motion.div>
-          <h2 className="text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-8">
-            Frequently Asked Questions
-          </h2>
-
-          {/* Category Filters */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category.id as FAQ['category'] | 'all')}
-                className={`px-6 py-3 rounded-xl flex items-center gap-2 transition-all ${
-                  selectedCategory === category.id
-                    ? 'bg-[#FFB000] text-black font-bold'
-                    : 'bg-[#FFB000]/20 text-[#FFCF9D] hover:bg-[#FFB000]/30'
-                }`}
-              >
-                {category.icon}
-                {category.label}
-              </motion.button>
-            ))}
+          <div className="relative inline-block">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent mb-4">
+              Lucky Winners FAQ 🎰
+            </h2>
+            <motion.div
+              className="absolute -right-8 -top-8"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              <Star className="w-8 h-8 text-[#FFB000]" />
+            </motion.div>
           </div>
+          <p className="text-[#FFCF9D]/70 text-lg max-w-2xl mx-auto">
+            Hit the jackpot with our most frequently asked questions! 💎
+          </p>
         </motion.div>
 
+        {/* Category Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {categories.map((category) => (
+            <motion.button
+              key={category.id}
+              onClick={() => setSelectedCategory(category.id as FAQ['category'] | 'all')}
+              className={`relative px-6 py-3 rounded-xl flex items-center gap-2 group overflow-hidden ${
+                selectedCategory === category.id 
+                ? 'bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black' 
+                : 'bg-[#1A1A1A]/50 text-[#FFCF9D] hover:bg-[#1A1A1A]/70'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <div className={`${selectedCategory === category.id ? 'text-black' : 'text-[#FFB000]'}`}>
+                {category.icon}
+              </div>
+              <span className="font-bold">{category.label}</span>
+              {selectedCategory === category.id && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute inset-0 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] -z-10"
+                  initial={false}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+            </motion.button>
+          ))}
+        </div>
+
         {/* FAQ Cards */}
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div ref={containerRef} className="max-w-4xl mx-auto space-y-6">
           <AnimatePresence mode="wait">
             {filteredFaqs.map((faq, index) => (
               <FAQCard
@@ -267,24 +366,6 @@ const FAQSection = () => {
             ))}
           </AnimatePresence>
         </div>
-
-        {/* Decorative Elements */}
-        <motion.div
-          className="absolute -bottom-8 -right-8 w-16 h-16"
-          animate={{
-            rotate: [0, 360],
-            scale: [1, 1.1, 1]
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-        >
-          <div className="w-full h-full rounded-full bg-gradient-to-r from-[#FFB000]/20 to-[#FFCF9D]/20 flex items-center justify-center">
-            <Sparkles className="w-8 h-8 text-[#FFB000]" />
-          </div>
-        </motion.div>
       </div>
     </section>
   );
