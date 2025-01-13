@@ -163,9 +163,9 @@ const BlogSection = () => {
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="flex flex-col gap-4"
+                      className="flex flex-col space-y-6"
                     >
-                      <div className="flex items-center gap-4 mb-4">
+                      <div className="flex items-center gap-4">
                         <div className={`px-4 py-2 rounded-full text-sm font-bold bg-gradient-to-r ${blogPosts[activeIndex].gradient} text-black/80`}>
                           <div className="flex items-center gap-2">
                             {React.createElement(blogPosts[activeIndex].icon, { size: 16 })}
@@ -175,13 +175,15 @@ const BlogSection = () => {
                         <span className="text-[#FFCF9D]/80">{blogPosts[activeIndex].date}</span>
                       </div>
                       
-                      <h3 className="text-4xl md:text-5xl font-black text-white mb-6">
-                        {blogPosts[activeIndex].title}
-                      </h3>
-                      
-                      <p className="text-xl text-[#FFCF9D]/90 max-w-2xl mb-8">
-                        {blogPosts[activeIndex].excerpt}
-                      </p>
+                      <div className="space-y-6">
+                        <h3 className="text-4xl md:text-5xl font-black text-white">
+                          {blogPosts[activeIndex].title}
+                        </h3>
+                        
+                        <p className="text-xl text-[#FFCF9D]/90 max-w-2xl">
+                          {blogPosts[activeIndex].excerpt}
+                        </p>
+                      </div>
                       
                       {/* Stats Grid */}
                       <div className="grid grid-cols-3 gap-4 mt-4">
