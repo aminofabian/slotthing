@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Star from './Star';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -77,6 +77,16 @@ const reviews = [
 
 const ReviewsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
+
+  useEffect(() => {
+    const particleCount = 20;
+    const initialParticles = Array.from({ length: particleCount }).map(() => ({
+      x: Math.random() * (window.innerWidth || 0),
+      y: Math.random() * (window.innerHeight || 0)
+    }));
+    setParticles(initialParticles);
+  }, []);
 
   return (
     <section className="relative py-32 overflow-hidden bg-[#0E0E0E]">
@@ -86,13 +96,13 @@ const ReviewsSection = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-[#1A1A1A]/50 via-[#0E0E0E]/50 to-[#1A1A1A]/50" />
         
         {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-1 h-1 bg-[#FFB000]"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: particle.x,
+              y: particle.y,
               scale: 0,
               opacity: 0 
             }}
