@@ -4,6 +4,7 @@ import React from 'react';
 import { Menu, X, User, LogIn } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
+import Link from 'next/link';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -51,18 +52,22 @@ const NavBar = () => {
 
         {/* Auth Buttons */}
         <div className="hidden md:flex items-center space-x-4">
-          <button className="px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-[#FFB000]/30 text-[#FFCF9D] font-medium hover:bg-black/60 transition-all transform hover:scale-105 hover:border-[#FFB000]/50">
-            <span className="flex items-center space-x-2">
-              <LogIn className="w-4 h-4" />
-              <span>Login</span>
-            </span>
-          </button>
-          <button className="px-4 py-2 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-medium hover:from-[#FFCF9D] hover:to-[#FFB000] transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(255,176,0,0.3)]">
-            <span className="flex items-center space-x-2">
-              <User className="w-4 h-4" />
-              <span>Sign Up</span>
-            </span>
-          </button>
+          <Link href="/dashboard">
+            <button className="px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-[#FFB000]/30 text-[#FFCF9D] font-medium hover:bg-black/60 transition-all transform hover:scale-105 hover:border-[#FFB000]/50">
+              <span className="flex items-center space-x-2">
+                <LogIn className="w-4 h-4" />
+                <span>Login</span>
+              </span>
+            </button>
+          </Link>
+          <Link href="/dashboard">
+            <button className="px-4 py-2 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-medium hover:from-[#FFCF9D] hover:to-[#FFB000] transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(255,176,0,0.3)]">
+              <span className="flex items-center space-x-2">
+                <User className="w-4 h-4" />
+                <span>Sign Up</span>
+              </span>
+            </button>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -90,18 +95,22 @@ const NavBar = () => {
                 </a>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-[#FFB000]/30">
-                <button className="px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-[#FFB000]/30 text-[#FFCF9D] font-medium hover:bg-black/60 transition-all">
-                  <span className="flex items-center justify-center space-x-2">
-                    <LogIn className="w-4 h-4" />
-                    <span>Login</span>
-                  </span>
-                </button>
-                <button className="px-4 py-2 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-medium hover:from-[#FFCF9D] hover:to-[#FFB000] transition-all">
-                  <span className="flex items-center justify-center space-x-2">
-                    <User className="w-4 h-4" />
-                    <span>Sign Up</span>
-                  </span>
-                </button>
+                <Link href="/dashboard">
+                  <button className="w-full px-4 py-2 rounded-full bg-black/50 backdrop-blur-xl border border-[#FFB000]/30 text-[#FFCF9D] font-medium hover:bg-black/60 transition-all">
+                    <span className="flex items-center justify-center space-x-2">
+                      <LogIn className="w-4 h-4" />
+                      <span>Login</span>
+                    </span>
+                  </button>
+                </Link>
+                <Link href="/dashboard">
+                  <button className="w-full px-4 py-2 rounded-full bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-medium hover:from-[#FFCF9D] hover:to-[#FFB000] transition-all">
+                    <span className="flex items-center justify-center space-x-2">
+                      <User className="w-4 h-4" />
+                      <span>Sign Up</span>
+                    </span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

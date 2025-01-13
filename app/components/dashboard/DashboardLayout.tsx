@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         <div className="flex-1">
           <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
-          <main className="lg:ml-64 min-h-screen">
+          <main className="min-h-screen">
             {children}
           </main>
         </div>

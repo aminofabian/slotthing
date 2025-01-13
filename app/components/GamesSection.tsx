@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Coins, Diamond, Crown, Flame, Sparkles, Zap, Timer } from 'lucide-react';
+import { Trophy, Coins, Diamond, Crown, Flame, Sparkles, Zap, Timer, Info } from 'lucide-react';
 
 interface Game {
   title: string;
@@ -209,23 +209,46 @@ const GameCard = ({ game, index }: { game: Game; index: number }) => {
             ))}
           </div>
 
-          {/* Play Button */}
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full py-3 px-6 rounded-xl bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] text-black font-bold relative overflow-hidden group"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              <Zap className="w-5 h-5" />
-              Play Now
-            </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-[#FFCF9D] to-[#FFB000]"
-              initial={{ x: '100%' }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.button>
+          {/* Buttons Container */}
+          <div className="flex items-center justify-center gap-4 mt-6">
+            {/* Play Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ 
+                scale: 1.05,
+                textShadow: "0 0 8px rgb(255,255,255)",
+                boxShadow: "0 0 30px rgba(255,176,0,0.6)"
+              }}
+              className="group relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity animate-pulse"></div>
+              <div className="relative px-8 py-3 rounded-xl bg-gradient-to-r from-[#FFB000] via-[#FFCF9D] to-[#FFB000] border-2 border-[#FFB000]/30 backdrop-blur-xl overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[60deg] transform-gpu transition-transform group-hover:translate-x-full duration-1000"></div>
+                <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
+                <span className="flex items-center gap-3 text-black text-base md:text-lg font-black tracking-wider">
+                  <span className="relative bg-black/10 p-1.5 rounded-lg">
+                    <Zap className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="absolute inset-0 bg-white/20 blur-sm rounded-lg"></span>
+                  </span>
+                  <span className="relative">
+                    <span className="absolute -inset-1 bg-white/20 blur-sm rounded-lg"></span>
+                    <span className="relative">PLAY NOW</span>
+                  </span>
+                </span>
+              </div>
+            </motion.button>
+
+            {/* Info Button */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.05 }}
+              className="p-2 rounded-lg bg-black/30 backdrop-blur-sm border border-white/10 text-white/90 hover:bg-black/40 transition-colors"
+            >
+              <Info className="w-5 h-5" />
+            </motion.button>
+          </div>
         </div>
       </motion.div>
     </motion.div>
