@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, User, LogIn } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
@@ -9,6 +9,15 @@ import Link from 'next/link';
 const NavBar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const navItems = [
     { name: 'Games', href: '#games' },

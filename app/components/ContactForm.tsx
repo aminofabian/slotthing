@@ -16,9 +16,16 @@ const ContactForm = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
+  const [mounted, setMounted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const particleCount = 20;
     const initialParticles = Array.from({ length: particleCount }).map(() => ({
       x: Math.random() * (window.innerWidth || 0),
@@ -40,7 +47,7 @@ const ContactForm = () => {
 
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -59,6 +66,10 @@ const ContactForm = () => {
       return () => form.removeEventListener('mousemove', handleMouseMove);
     }
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

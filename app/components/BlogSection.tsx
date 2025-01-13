@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, useAnimation, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { Gamepad2, Trophy, Flame, TrendingUp, Star, ChevronRight, ChevronLeft } from 'lucide-react';
 
 const blogPosts = [
@@ -68,6 +69,12 @@ const BlogSection = () => {
   const [isHovering, setIsHovering] = useState(false);
   const controls = useAnimation();
   const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -78,6 +85,10 @@ const BlogSection = () => {
     }
     return () => clearInterval(interval);
   }, [autoplayEnabled, isHovering]);
+
+  if (!mounted) {
+    return null; 
+  }
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % blogPosts.length);

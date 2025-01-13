@@ -10,6 +10,11 @@ const Footer = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
   const footerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const particleCount = 30;
@@ -37,6 +42,10 @@ const Footer = () => {
       return () => footer.removeEventListener('mousemove', handleMouseMove);
     }
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const socialLinks = [
     { icon: <Facebook className="w-5 h-5" />, href: '#', label: 'Facebook' },

@@ -158,6 +158,15 @@ const FAQSection = () => {
   const [openId, setOpenId] = useState<number | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<FAQ['category'] | 'all'>('all');
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   const categories = [
     { id: 'all', label: 'All FAQs', icon: <HelpCircle className="w-5 h-5" /> },

@@ -78,6 +78,11 @@ const reviews = [
 const ReviewsSection = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const particleCount = 20;
@@ -87,6 +92,10 @@ const ReviewsSection = () => {
     }));
     setParticles(initialParticles);
   }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <section className="relative py-32 overflow-hidden bg-[#0E0E0E]">

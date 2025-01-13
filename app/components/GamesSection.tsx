@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, Coins, Diamond, Crown, Flame, Sparkles, Zap, Timer, Info } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 
 interface Game {
   title: string;
@@ -258,6 +259,12 @@ const GameCard = ({ game, index }: { game: Game; index: number }) => {
 const GamesSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<Game['category'] | 'all'>('all');
   const [particles, setParticles] = useState<Array<{ x: number, y: number }>>([]);
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const particleCount = 30;
@@ -267,6 +274,10 @@ const GamesSection = () => {
     }));
     setParticles(initialParticles);
   }, []);
+
+  if (!mounted) {
+    return null; 
+  }
 
   const categories = [
     { id: 'all', label: 'All Games', icon: <Sparkles className="w-5 h-5" /> },
