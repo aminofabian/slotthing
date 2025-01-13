@@ -123,98 +123,100 @@ export const Hero = () => {
   return (
     <div className="relative h-screen w-full overflow-hidden bg-black">
       {/* Fixed Branding Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-start pt-16 md:pt-28 z-20 pointer-events-none">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-xl md:text-3xl font-bold mb-2 md:mb-4 text-[#FFCF9D] tracking-wide"
-        >
-          Unleash Your Fortune
-        </motion.h2>
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-6xl md:text-8xl lg:text-9xl font-black text-center mb-4 md:mb-6 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent tracking-tight px-4"
-          style={{
-            textShadow: '0 0 80px rgba(255, 176, 0, 0.3)',
-            WebkitTextStroke: '2px rgba(255, 176, 0, 0.1)',
-          }}
-        >
-          Slot Thing
-        </motion.h1>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-4 md:gap-6 px-4 max-w-4xl w-full"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-2xl"></div>
-            <p className="relative px-8 py-3 text-xl md:text-3xl text-center font-bold bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent leading-relaxed tracking-wide">
-              Where Fortune Awaits
-            </p>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center mt-4 md:mt-6 w-full max-w-3xl">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
-              <div className="relative flex flex-col items-center p-3 md:p-4 space-y-1.5 md:space-y-2">
-                <span className="text-base md:text-lg font-bold text-[#FFB000]">Instant Wins</span>
-                <span className="text-xs md:text-sm text-[#FFCF9D]/90">60s Payouts</span>
+      <div className="absolute inset-0 flex flex-col items-center pt-12 sm:pt-16 md:pt-24 z-20">
+        <div className="flex-1 flex flex-col items-center pointer-events-none max-w-7xl mx-auto w-full px-4">
+          <motion.h2
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-lg sm:text-xl md:text-3xl font-bold mb-2 md:mb-4 text-[#FFCF9D] tracking-wide"
+          >
+            Unleash Your Fortune
+          </motion.h2>
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-center mb-3 sm:mb-4 md:mb-6 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent tracking-tight"
+            style={{
+              textShadow: '0 0 80px rgba(255, 176, 0, 0.3)',
+              WebkitTextStroke: '2px rgba(255, 176, 0, 0.1)',
+            }}
+          >
+            Slot Thing
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center gap-3 sm:gap-4 md:gap-6 max-w-4xl w-full"
+          >
+            <div className="relative w-full max-w-2xl">
+              <div className="absolute inset-0 bg-black/20 backdrop-blur-sm rounded-2xl"></div>
+              <p className="relative px-4 sm:px-6 md:px-8 py-2 sm:py-3 text-lg sm:text-xl md:text-3xl text-center font-bold bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent leading-relaxed tracking-wide">
+                Where Fortune Awaits
+              </p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 md:gap-4 text-center w-full">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
+                <div className="relative flex flex-col items-center p-2 sm:p-3 md:p-4 space-y-1 sm:space-y-1.5 md:space-y-2">
+                  <span className="text-sm sm:text-base md:text-lg font-bold text-[#FFB000]">Instant Wins</span>
+                  <span className="text-xs md:text-sm text-[#FFCF9D]/90">60s Payouts</span>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
+                <div className="relative flex flex-col items-center p-2 sm:p-3 md:p-4 space-y-1 sm:space-y-1.5 md:space-y-2">
+                  <span className="text-sm sm:text-base md:text-lg font-bold text-[#FFB000]">Elite Status</span>
+                  <span className="text-xs md:text-sm text-[#FFCF9D]/90">VIP Perks</span>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
+                <div className="relative flex flex-col items-center p-2 sm:p-3 md:p-4 space-y-1 sm:space-y-1.5 md:space-y-2">
+                  <span className="text-sm sm:text-base md:text-lg font-bold text-[#FFB000]">$1M+ Wins</span>
+                  <span className="text-xs md:text-sm text-[#FFCF9D]/90">Mega Jackpots</span>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
+                <div className="relative flex flex-col items-center p-2 sm:p-3 md:p-4 space-y-1 sm:space-y-1.5 md:space-y-2">
+                  <span className="text-sm sm:text-base md:text-lg font-bold text-[#FFB000]">Crypto Edge</span>
+                  <span className="text-xs md:text-sm text-[#FFCF9D]/90">Zero Fees</span>
+                </div>
               </div>
             </div>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
-              <div className="relative flex flex-col items-center p-3 md:p-4 space-y-1.5 md:space-y-2">
-                <span className="text-base md:text-lg font-bold text-[#FFB000]">Elite Status</span>
-                <span className="text-xs md:text-sm text-[#FFCF9D]/90">VIP Perks</span>
-              </div>
-            </div>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
-              <div className="relative flex flex-col items-center p-3 md:p-4 space-y-1.5 md:space-y-2">
-                <span className="text-base md:text-lg font-bold text-[#FFB000]">$1M+ Wins</span>
-                <span className="text-xs md:text-sm text-[#FFCF9D]/90">Mega Jackpots</span>
-              </div>
-            </div>
-            <div className="relative group">
-              <div className="absolute inset-0 bg-black/30 backdrop-blur-sm rounded-xl group-hover:bg-black/40 transition-colors"></div>
-              <div className="relative flex flex-col items-center p-3 md:p-4 space-y-1.5 md:space-y-2">
-                <span className="text-base md:text-lg font-bold text-[#FFB000]">Crypto Edge</span>
-                <span className="text-xs md:text-sm text-[#FFCF9D]/90">Zero Fees</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        {/* Unique Play Now Button */}
-        <div className="pointer-events-auto absolute bottom-2 md:bottom-4 lg:bottom-4">
-          <Link href="/dashboard">
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ 
-                scale: 1.05,
-                textShadow: "0 0 8px rgb(255,255,255)",
-                boxShadow: "0 0 30px rgba(255,176,0,0.6)"
-              }}
-              className="group relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity animate-pulse"></div>
-              <div className="relative px-8 py-3 rounded-xl bg-gradient-to-r from-[#FFB000] via-[#FFCF9D] to-[#FFB000] border-2 border-[#FFB000]/30 backdrop-blur-xl overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[60deg] transform-gpu transition-transform group-hover:translate-x-full duration-1000"></div>
-                <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
-                <span className="flex items-center gap-3 text-black text-base md:text-lg font-black tracking-wider">
-                  <span className="relative bg-black/10 p-1.5 rounded-lg">
-                    <Gamepad2 className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="absolute inset-0 bg-white/20 blur-sm rounded-lg"></span>
+          {/* Unique Play Now Button */}
+          <div className="pointer-events-auto mt-6 sm:mt-8 md:mt-12 mb-16 sm:mb-20 md:mb-24 lg:mb-32 relative z-10">
+            <Link href="/dashboard">
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ 
+                  scale: 1.05,
+                  textShadow: "0 0 8px rgb(255,255,255)",
+                  boxShadow: "0 0 30px rgba(255,176,0,0.6)"
+                }}
+                className="group relative"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] rounded-xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity animate-pulse"></div>
+                <div className="relative px-4 sm:px-8 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-[#FFB000] via-[#FFCF9D] to-[#FFB000] border-2 border-[#FFB000]/30 backdrop-blur-xl overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rotate-[60deg] transform-gpu transition-transform group-hover:translate-x-full duration-1000"></div>
+                  <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-10"></div>
+                  <span className="flex items-center justify-center gap-2 sm:gap-3 text-black text-sm sm:text-base md:text-lg font-black tracking-wider">
+                    <span className="relative bg-black/10 p-1 sm:p-1.5 rounded-lg">
+                      <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="absolute inset-0 bg-white/20 blur-sm rounded-lg"></span>
+                    </span>
+                    <span className="relative">
+                      <span className="absolute -inset-1 bg-white/20 blur-sm rounded-lg"></span>
+                      <span className="relative">PLAY NOW</span>
+                    </span>
                   </span>
-                  <span className="relative">
-                    <span className="absolute -inset-1 bg-white/20 blur-sm rounded-lg"></span>
-                    <span className="relative">PLAY NOW</span>
-                  </span>
-                </span>
-              </div>
-            </motion.button>
-          </Link>
+                </div>
+              </motion.button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -283,7 +285,7 @@ export const Hero = () => {
                 : 'bg-gradient-to-b from-black/60 via-black/40 to-black/60'
             }`}>
               {/* Game-specific Content */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center pt-[60vh] px-4">
+              <div className="absolute inset-0 flex flex-col items-center justify-center pt-[35vh] px-4">
                 <motion.div
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
