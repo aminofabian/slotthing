@@ -9,7 +9,7 @@ interface SidebarItemProps {
   label: string;
   value?: string | number;
   href: string;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 interface MenuGroup {
