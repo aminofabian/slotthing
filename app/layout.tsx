@@ -10,8 +10,13 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'Slot Thing - Next-Gen Slot Gaming',
-  description: 'Experience the thrill of next-gen slot gaming with Slot Thing',
+  title: 'SlotThing',
+  description: 'Your Ultimate Gaming Destination',
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/icon.svg'
+  },
+  themeColor: '#FFB000',
 }
 
 export default function RootLayout({
