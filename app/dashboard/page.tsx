@@ -720,7 +720,7 @@ const DashboardPage = () => {
               <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
                 <div className="flex items-center gap-6">
                   <Image
-                    src="/logo.png"
+                    src="/111.png"
                     alt="SlotThing"
                     width={32}
                     height={32}
