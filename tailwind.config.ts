@@ -22,6 +22,7 @@ module.exports = {
         'shine': 'shine 2s linear infinite',
         'star-pulse': 'star-pulse 2s ease-in-out infinite',
         'sparkle': 'sparkle 1.5s ease-in-out infinite',
+        'slow-spin': 'slow-spin 20s linear infinite'
       },
       keyframes: {
         'gradient-x': {
@@ -84,6 +85,10 @@ module.exports = {
             opacity: '0.8',
           },
         },
+        'slow-spin': {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' }
+        }
       },
     },
   },

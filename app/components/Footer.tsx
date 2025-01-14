@@ -70,6 +70,18 @@ const Footer = () => {
       ref={footerRef}
       className="relative pt-32 pb-8 overflow-hidden bg-[#0E0E0E]"
     >
+      {/* Background Seal */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-5">
+        <div className="relative w-[500px] h-[500px] animate-slow-spin">
+          <Image
+            src="/111.png"
+            alt="Decorative Seal"
+            fill
+            className="object-contain"
+          />
+        </div>
+      </div>
+
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-[url('/grid-pattern.png')] opacity-5" />
