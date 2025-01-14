@@ -18,7 +18,7 @@ import Image from 'next/image';
 interface PaymentOption {
   id: string;
   name: string;
-  icon: JSX.Element | string;
+  icon: React.ReactNode| string;
   description: string;
   isPopular?: boolean;
 }
