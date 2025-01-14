@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Code, Paintbrush, Plus, RefreshCw } from 'lucide-react';
+import { Clock, Code, Paintbrush, Plus, RefreshCw, CheckCircle2, Circle, AlertCircle, Timer, ArrowUpRight } from 'lucide-react';
+import Calendar from '../components/Calendar';
 
 // Types for our changelog entries
 type ChangelogEntry = {
@@ -13,8 +14,269 @@ type ChangelogEntry = {
   details?: string[];
 };
 
-// Our changelog data
+// Type for tasks
+type Task = {
+  title: string;
+  completed: boolean;
+  category: 'Setup' | 'UI' | 'Feature' | 'Documentation' | 'Layout';
+  priority: 'High' | 'Medium' | 'Low';
+  timeEstimate: string;
+  status: 'Completed' | 'In Progress' | 'Planned';
+  date: string;
+  accomplishments?: string[];
+  notes?: string;
+};
+
+// Today's tasks
+const todaysTasks: Task[] = [
+  {
+    title: "Fix Hero component layout and spacing issues",
+    completed: true,
+    category: "Layout",
+    priority: "High",
+    timeEstimate: "2h",
+    status: "Completed",
+    date: "2025-01-14",
+    accomplishments: [
+      "Fixed overlapping issues and mobile responsiveness"
+    ],
+    notes: "Fixed overlapping issues and mobile responsiveness"
+  },
+  {
+    title: "Implement custom favicon and app icons",
+    completed: true,
+    category: "UI",
+    priority: "Medium",
+    timeEstimate: "1h",
+    status: "Completed",
+    date: "2025-01-14",
+    accomplishments: [
+      "Added SVG icon with brand colors"
+    ],
+    notes: "Added SVG icon with brand colors"
+  },
+  {
+    title: "Create development log page",
+    completed: true,
+    category: "Feature",
+    priority: "Medium",
+    timeEstimate: "3h",
+    status: "Completed",
+    date: "2025-01-14",
+    accomplishments: [
+      "Added timeline and calendar filtering"
+    ],
+    notes: "Added timeline and calendar filtering"
+  },
+  {
+    title: "Add calendar filtering to logs",
+    completed: true,
+    category: "Feature",
+    priority: "Low",
+    timeEstimate: "2h",
+    status: "Completed",
+    date: "2025-01-14",
+    accomplishments: [],
+    notes: ""
+  },
+  {
+    title: "Optimize mobile responsiveness",
+    completed: false,
+    category: "Layout",
+    priority: "High",
+    timeEstimate: "4h",
+    status: "In Progress",
+    date: "2025-01-14",
+    accomplishments: [],
+    notes: "Working on hero section and game cards"
+  },
+  {
+    title: "Implement user settings page",
+    completed: false,
+    category: "Feature",
+    priority: "Medium",
+    timeEstimate: "6h",
+    status: "Planned",
+    date: "2025-01-14",
+    accomplishments: [],
+    notes: "Need to design UI mockup first"
+  }
+];
+
+// Week 1 tasks
+const weekTasks: Task[] = [
+  // Monday - January 13, 2025
+  {
+    title: "Initialize Next.js project with TypeScript",
+    completed: true,
+    category: "Setup",
+    priority: "High",
+    timeEstimate: "2h",
+    status: "Completed",
+    date: "2025-01-13",
+    accomplishments: [
+      "Created Next.js 13+ project with TypeScript",
+      "Set up ESLint and Prettier",
+      "Configured Tailwind CSS",
+      "Added base project structure"
+    ],
+    notes: "Project foundation established with modern tooling"
+  },
+  {
+    title: "Set up WebSocket/Socket.io configuration",
+    completed: true,
+    category: "Setup",
+    priority: "High",
+    timeEstimate: "3h",
+    status: "Completed",
+    date: "2025-01-13",
+    accomplishments: [
+      "Installed Socket.io client and server",
+      "Created WebSocket connection manager",
+      "Set up real-time event handlers",
+      "Added connection status monitoring"
+    ],
+    notes: "Real-time infrastructure ready for game updates"
+  },
+  {
+    title: "Configure performance monitoring",
+    completed: true,
+    category: "Setup",
+    priority: "Medium",
+    timeEstimate: "2h",
+    status: "Completed",
+    date: "2025-01-13",
+    accomplishments: [
+      "Integrated performance metrics tracking",
+      "Set up error boundary system",
+      "Added analytics events",
+      "Configured logging system"
+    ],
+    notes: "Monitoring system in place for tracking app performance"
+  },
+
+  // Tuesday - January 14, 2025
+  {
+    title: "Implement mobile-first configuration",
+    completed: false,
+    category: "Setup",
+    priority: "High",
+    timeEstimate: "4h",
+    status: "Planned",
+    date: "2025-01-14",
+    accomplishments: [],
+    notes: "Focus on responsive breakpoints and mobile optimization"
+  },
+  {
+    title: "Create development workflow documentation",
+    completed: false,
+    category: "Documentation",
+    priority: "Medium",
+    timeEstimate: "3h",
+    status: "Planned",
+    date: "2025-01-14",
+    accomplishments: [],
+    notes: "Document setup process and development guidelines"
+  },
+
+  // Wednesday - January 15, 2025
+  {
+    title: "Design and implement responsive homepage",
+    completed: false,
+    category: "UI",
+    priority: "High",
+    timeEstimate: "6h",
+    status: "Planned",
+    date: "2025-01-15",
+    accomplishments: [],
+    notes: "Create engaging landing page with responsive design"
+  },
+  {
+    title: "Implement dark/light mode system",
+    completed: false,
+    category: "UI",
+    priority: "Medium",
+    timeEstimate: "3h",
+    status: "Planned",
+    date: "2025-01-15",
+    accomplishments: [],
+    notes: "Add theme switching with system preference detection"
+  },
+
+  // Thursday - January 16, 2025
+  {
+    title: "Set up component library",
+    completed: false,
+    category: "UI",
+    priority: "High",
+    timeEstimate: "4h",
+    status: "Planned",
+    date: "2025-01-16",
+    accomplishments: [],
+    notes: "Build reusable component system with Storybook"
+  },
+  {
+    title: "Implement design system",
+    completed: false,
+    category: "UI",
+    priority: "High",
+    timeEstimate: "4h",
+    status: "Planned",
+    date: "2025-01-16",
+    accomplishments: [],
+    notes: "Create consistent design tokens and styling system"
+  },
+
+  // Friday - January 17, 2025
+  {
+    title: "Create logo and brand assets",
+    completed: false,
+    category: "UI",
+    priority: "Medium",
+    timeEstimate: "3h",
+    status: "Planned",
+    date: "2025-01-17",
+    accomplishments: [],
+    notes: "Design and implement brand identity elements"
+  },
+  {
+    title: "Create dashboard layout and navigation",
+    completed: false,
+    category: "Feature",
+    priority: "High",
+    timeEstimate: "4h",
+    status: "Planned",
+    date: "2025-01-17",
+    accomplishments: [],
+    notes: "Build responsive dashboard framework"
+  },
+  {
+    title: "Build statistics widgets",
+    completed: false,
+    category: "Feature",
+    priority: "High",
+    timeEstimate: "3h",
+    status: "Planned",
+    date: "2025-01-17",
+    accomplishments: [],
+    notes: "Create reusable dashboard widgets"
+  }
+];
+
+// Our changelog data - now in reverse chronological order
 const changelogData: ChangelogEntry[] = [
+  {
+    type: 'changed',
+    date: '2025-01-14',
+    title: 'Development Log Implementation',
+    description: 'Added comprehensive development tracking system',
+    details: [
+      'Created logs page with timeline view',
+      'Implemented calendar-based filtering',
+      "Added today's tasks section",
+      'Organized entries in reverse chronological order'
+    ]
+  },
   {
     type: 'changed',
     date: '2025-01-14',
@@ -52,18 +314,6 @@ const changelogData: ChangelogEntry[] = [
       'Review section with testimonials',
       'Games section with filtering capability'
     ]
-  },
-  {
-    type: 'upcoming',
-    title: 'Planned Features',
-    description: 'Features planned for the next release',
-    details: [
-      'User authentication system',
-      'Real-time game stats',
-      'Enhanced PWA capabilities',
-      'Additional game categories',
-      'Performance optimizations'
-    ]
   }
 ];
 
@@ -100,107 +350,176 @@ const getColors = (type: ChangelogEntry['type']) => {
 };
 
 export default function LogsPage() {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedDay, setSelectedDay] = useState<string | null>(null);
+
+  // Get unique dates for the week
+  const weekDates = {
+    'Monday': '2025-01-13',
+    'Tuesday': '2025-01-14',
+    'Wednesday': '2025-01-15',
+    'Thursday': '2025-01-16',
+    'Friday': '2025-01-17'
+  };
+
+  // Filter tasks by day
+  const filteredTasks = useMemo(() => {
+    if (!selectedDay) return weekTasks;
+    const selectedDate = weekDates[selectedDay as keyof typeof weekDates];
+    return weekTasks.filter(task => task.date === selectedDate);
+  }, [selectedDay]);
+
   return (
     <div className="min-h-screen bg-black text-white pt-24 pb-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl sm:text-5xl font-black mb-4 bg-gradient-to-r from-[#FFB000] to-[#FFCF9D] bg-clip-text text-transparent">
-            Development Log
+            Week 1 Development Plan
           </h1>
+          <p className="text-[#FFCF9D]/70 text-lg mb-2">
+            January 13-17, 2025
+          </p>
           <p className="text-[#FFCF9D]/70 text-lg">
-            Tracking the evolution of SlotThing
+            Project Setup, Core UI & Dashboard Framework
           </p>
         </div>
 
-        {/* Timeline */}
-        <div className="relative">
-          <div className="absolute left-4 sm:left-1/2 h-full w-0.5 bg-gradient-to-b from-[#FFB000]/50 to-transparent"></div>
-
-          {/* Entries */}
-          <div className="space-y-12">
-            {changelogData.map((entry, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`relative ${
-                  index % 2 === 0 ? 'sm:pr-1/2' : 'sm:pl-1/2 sm:ml-auto'
-                }`}
-              >
-                {/* Entry content */}
-                <div className="relative sm:w-[calc(100%-2rem)] p-6 rounded-xl border backdrop-blur-xl transition-colors duration-300 hover:border-[#FFB000]/30"
-                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-                  {/* Type badge */}
-                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium mb-4 ${getColors(entry.type)}`}>
-                    {getIcon(entry.type)}
-                    <span className="capitalize">{entry.type}</span>
-                  </div>
-
-                  {/* Date if available */}
-                  {entry.date && (
-                    <div className="flex items-center gap-2 text-[#FFCF9D]/60 text-sm mb-2">
-                      <Clock className="w-4 h-4" />
-                      {entry.date}
-                    </div>
-                  )}
-
-                  {/* Title and description */}
-                  <h3 className="text-xl font-bold text-[#FFCF9D] mb-2">
-                    {entry.title}
-                  </h3>
-                  {entry.description && (
-                    <p className="text-[#FFCF9D]/70 mb-4">{entry.description}</p>
-                  )}
-
-                  {/* Details list */}
-                  {entry.details && (
-                    <ul className="space-y-2">
-                      {entry.details.map((detail, idx) => (
-                        <motion.li
-                          key={idx}
-                          initial={{ opacity: 0, x: -10 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.2 + idx * 0.1 }}
-                          className="flex items-start gap-2 text-[#FFCF9D]/80"
-                        >
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#FFB000]" />
-                          {detail}
-                        </motion.li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
+        {/* Day Filter */}
+        <div className="mb-8 flex flex-wrap gap-2 justify-center">
+          {Object.entries(weekDates).map(([day, date]) => (
+            <button
+              key={day}
+              onClick={() => setSelectedDay(selectedDay === day ? null : day)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all
+                ${selectedDay === day 
+                  ? 'bg-[#FFB000] text-black' 
+                  : 'bg-[#FFB000]/10 text-[#FFCF9D] hover:bg-[#FFB000]/20'}`}
+            >
+              {day} ({date})
+            </button>
+          ))}
         </div>
 
-        {/* Technical Stack */}
-        <div className="mt-20 text-center">
-          <h2 className="text-2xl font-bold text-[#FFCF9D] mb-4">
-            Technical Stack
-          </h2>
-          <div className="inline-flex flex-wrap justify-center gap-3">
-            {[
-              'Next.js 13+',
-              'TypeScript',
-              'Tailwind CSS',
-              'Framer Motion',
-              'Lucide Icons',
-              'Context API'
-            ].map((tech, index) => (
-              <motion.span
-                key={tech}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                className="px-4 py-2 rounded-full bg-[#FFB000]/10 border border-[#FFB000]/20 text-[#FFCF9D]"
-              >
-                {tech}
-              </motion.span>
-            ))}
+        {/* Tasks Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="border-b border-[#FFB000]/20">
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Status</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Task</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Date</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Category</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Priority</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Est. Time</th>
+                <th className="px-4 py-3 text-left text-sm font-medium text-[#FFCF9D]/60">Accomplishments</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredTasks.map((task, index) => (
+                <motion.tr
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`border-b border-white/5 hover:bg-[#FFB000]/5 transition-colors
+                    ${task.completed ? 'bg-[#FFB000]/5' : ''}`}
+                >
+                  <td className="px-4 py-4">
+                    {task.completed ? (
+                      <CheckCircle2 className="w-5 h-5 text-[#FFB000]" />
+                    ) : (
+                      <Circle className="w-5 h-5 text-[#FFCF9D]/40" />
+                    )}
+                  </td>
+                  <td className="px-4 py-4">
+                    <div>
+                      <span className={`font-medium ${task.completed ? 'text-[#FFCF9D]' : 'text-[#FFCF9D]/70'}`}>
+                        {task.title}
+                      </span>
+                      {task.notes && (
+                        <p className="text-sm text-[#FFCF9D]/50 mt-1">
+                          {task.notes}
+                        </p>
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-4 py-4">
+                    <span className="text-sm text-[#FFCF9D]/70">
+                      {task.date}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-[#FFB000]/10 text-[#FFCF9D]">
+                      {task.category}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <span className={`flex items-center gap-1 text-sm
+                      ${task.priority === 'High' ? 'text-red-400' : 
+                        task.priority === 'Medium' ? 'text-yellow-400' : 
+                        'text-green-400'}`}>
+                      <AlertCircle className="w-4 h-4" />
+                      {task.priority}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    <span className="flex items-center gap-1 text-sm text-[#FFCF9D]/60">
+                      <Timer className="w-4 h-4" />
+                      {task.timeEstimate}
+                    </span>
+                  </td>
+                  <td className="px-4 py-4">
+                    {task.accomplishments && task.accomplishments.length > 0 ? (
+                      <ul className="list-disc list-inside text-sm text-[#FFCF9D]/60 space-y-1">
+                        {task.accomplishments.map((acc, i) => (
+                          <li key={i}>{acc}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <span className="text-sm text-[#FFCF9D]/40">Pending</span>
+                    )}
+                  </td>
+                </motion.tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Progress Summary */}
+        <div className="mt-8">
+          <h3 className="text-lg font-medium text-[#FFCF9D] mb-4">Progress Overview</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {['Setup', 'UI', 'Feature', 'Documentation'].map((category) => {
+              const categoryTasks = weekTasks.filter(t => t.category === category);
+              const completedTasks = categoryTasks.filter(t => t.completed);
+              const totalTime = categoryTasks.reduce((acc, task) => 
+                acc + parseInt(task.timeEstimate), 0);
+              const progress = (completedTasks.length / categoryTasks.length) * 100;
+              
+              return (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-xl bg-[#FFB000]/5 border border-[#FFB000]/20"
+                >
+                  <h4 className="text-lg font-medium text-[#FFCF9D] mb-2">{category}</h4>
+                  <div className="flex flex-col gap-2">
+                    <p className="text-sm text-[#FFCF9D]/60">
+                      {completedTasks.length}/{categoryTasks.length} tasks • {totalTime}h total
+                    </p>
+                    <div className="w-full h-2 bg-[#FFB000]/10 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${progress}%` }}
+                        className="h-full bg-[#FFB000]"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>

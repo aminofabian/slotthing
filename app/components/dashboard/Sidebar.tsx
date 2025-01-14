@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Wallet, ShoppingCart, Gamepad2, History, User, Store, Target, DollarSign, CreditCard, Award, Menu, X } from 'lucide-react';
+import EnhancedPaymentPopup from '../payment/EnhancedPaymentPopup';
+import CashoutPopup from '../cashout/CashoutPopup';
 
 interface SidebarItemProps {
   icon: React.ElementType;
@@ -99,11 +101,33 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
+  const [isPaymentPopupOpen, setIsPaymentPopupOpen] = useState(false);
+  const [isCashoutPopupOpen, setIsCashoutPopupOpen] = useState(false);
   const stats = {
     balance: 0,
     inGames: 0,
     diamonds: 0,
     xp: 500,
+  };
+
+  const handlePurchaseClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsPaymentPopupOpen(true);
+  };
+
+  const handleCashoutClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsCashoutPopupOpen(true);
+  };
+
+  const handlePaymentSelect = (method: string) => {
+    console.log('Selected payment method:', method);
+    setIsPaymentPopupOpen(false);
+  };
+
+  const handleCashoutSelect = (method: string, amount: number) => {
+    console.log('Cashout requested:', { method, amount });
+    setIsCashoutPopupOpen(false);
   };
 
   const sidebarClasses = `
@@ -124,7 +148,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
       )}
 
       {/* Sidebar */}
-      <div className={sidebarClasses}>
+      <aside className={sidebarClasses}>
         {/* Header */}
         <div className="relative flex items-center justify-between p-6">
           <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
@@ -196,14 +220,40 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     icon={item.icon}
                     label={item.label}
                     href={item.href}
-                    onClick={onClose}
+                    onClick={
+                      item.label === 'Purchase' 
+                        ? handlePurchaseClick 
+                        : item.label === 'Cashout'
+                        ? handleCashoutClick
+                        : undefined
+                    }
                   />
                 ))}
               </div>
             </div>
           ))}
         </nav>
-      </div>
+      </aside>
+
+      {/* Payment Popup */}
+      <EnhancedPaymentPopup
+        isOpen={isPaymentPopupOpen}
+        onClose={() => setIsPaymentPopupOpen(false)}
+        amount={100}
+        userBalance={stats.balance}
+        onPaymentSelect={handlePaymentSelect}
+        packageName="Standard Package"
+        credits={1000}
+        bonus={100}
+      />
+
+      {/* Cashout Popup */}
+      <CashoutPopup
+        isOpen={isCashoutPopupOpen}
+        onClose={() => setIsCashoutPopupOpen(false)}
+        userBalance={stats.balance}
+        onCashoutSelect={handleCashoutSelect}
+      />
     </>
   );
 };
